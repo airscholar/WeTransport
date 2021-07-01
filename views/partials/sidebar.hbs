@@ -1,0 +1,141 @@
+<aside class='left-sidebar'>
+  <!-- Sidebar scroll-->
+  <div class='scroll-sidebar'>
+    <!-- Sidebar navigation-->
+    <nav class='sidebar-nav'>
+      <ul id='sidebarnav'>
+        <!-- User Profile-->
+        <li>
+          <!-- User Profile-->
+          <div class='user-profile d-flex no-block dropdown m-t-20'>
+            <div class='user-pic'>
+              <img src='../thumbmaker.php?src=http://localhost/WeTransport//uploads/blank.png' class='rounded-circle'
+                width='51' />
+            </div>
+
+            <div class='user-content hide-menu m-l-10'>
+              <a href='javascript:void(0)' class='' id='Userdd' role='button' data-toggle='dropdown'
+                aria-haspopup='true' aria-expanded='false'>
+                <h5 class='m-b-0 user-name font-medium'>Good evening!,&nbsp;&nbsp;</h5>
+                <span class='op-5 user-email'>Admin</span>
+              </a>
+            </div>
+          </div>
+          <!-- End User Profile-->
+        </li>
+        <li class='p-15 m-t-10'><a href='customer_list.php'
+            class='btn btn-block create-btn text-white no-block d-flex align-items-center'><i class='ti-package'></i>
+            <span class='hide-menu m-l-5'> Create new Shipment </span>
+          </a></li>
+        <!-- User Profile-->
+        <li class='nav-small-cap'> <span class='hide-menu'></span></li>
+
+        <li class='sidebar-item'>
+          <a class='sidebar-link waves-effect waves-dark' href='index.php' aria-expanded='false'><i
+              class='mdi mdi-view-dashboard'></i><span class='hide-menu'>
+              Dashboard
+            </span></a>
+        </li>
+
+        <li class='sidebar-item'>
+          <a class='sidebar-link has-arrow waves-effect waves-dark' href='javascript:void(0)' aria-expanded='false'><i
+              class='mdi mdi-cube-send'></i><span class='hide-menu'> Shipment</span></a>
+          <ul aria-expanded='false' class='collapse first-level'>
+            <li class='sidebar-item'><a href='courier.php?do=list_courier' class='sidebar-link'><i
+                  class='mdi mdi-check'></i><span class='hide-menu'>
+                  Shipment List
+                </span></a></li>
+            <li class='sidebar-item'><a href='customer_list.php' class='sidebar-link'><i class='mdi mdi-cube-send'
+                  style='color:#f62d51'></i><span class='hide-menu'>
+                  Create Shipment
+                </span></a></li>
+            <li class='sidebar-item'><a href='customerpickup_list.php' class='sidebar-link'><i
+                  class='mdi mdi-clock-fast' style='color:#f62d51'></i><span class='hide-menu'> Create pickup
+                </span></a></li>
+            <li class='sidebar-item'><a href='pickup.php?do=create_pickup' class='sidebar-link'><i
+                  class='mdi mdi-clock-fast'></i><span class='hide-menu'>
+                  Pick up List
+                </span></a></li>
+            <li class='sidebar-item'>
+              <a class='sidebar-link waves-effect waves-dark' href='search_shipment.php' aria-expanded='false'><i
+                  class='mdi mdi-search-web'></i><span class='hide-menu'> Advanced Search </span></a>
+            </li>
+          </ul>
+        </li>
+
+        <li class='sidebar-item'>
+          <a class='sidebar-link has-arrow waves-effect waves-dark' href='javascript:void(0)' aria-expanded='false'><i
+              class='mdi mdi-book-multiple' style='color:#fb8c00'></i><span class='hide-menu'> General
+              Reports</span></a>
+          <ul aria-expanded='false' class='collapse first-level'>
+            <li class='sidebar-item'><a href='shipping.php?do=shipment' class='sidebar-link'><i
+                  class='mdi mdi-check'></i><span class='hide-menu'>
+                  All
+                </span></a></li>
+            <li class='sidebar-item'><a href='shipping.php?do=prealert_report' class='sidebar-link'><i
+                  class='mdi mdi-check'></i><span class='hide-menu'>
+                  Pre Alerts
+                </span></a></li>
+            <li class='sidebar-item'><a href='shipping.php?do=pending' class='sidebar-link'><i
+                  class='mdi mdi-check'></i><span class='hide-menu'>
+                  Earrings
+                </span></a></li>
+            <li class='sidebar-item'><a href='shipping.php?do=rejected' class='sidebar-link'><i
+                  class='mdi mdi-check'></i><span class='hide-menu'>
+                  Rejected
+                </span></a></li>
+            <li class='sidebar-item'><a href='shipping.php?do=delivered' class='sidebar-link'><i
+                  class='mdi mdi-check'></i><span class='hide-menu'>
+                  Delivered
+                </span></a></li>
+            <li class='sidebar-item'><a href='shipping.php?do=delivered_consolidated' class='sidebar-link'><i
+                  class='mdi mdi-check'></i><span class='hide-menu'>
+                  Consolidated Delivered
+                </span></a></li>
+          </ul>
+        </li>
+
+        <li class='sidebar-item'>
+          <a class='sidebar-link has-arrow waves-effect waves-dark' href='javascript:void(0)' aria-expanded='false'><i
+              class='fas fa-hand-holding-usd' style='color:#2962FF'></i><span class='hide-menu'> Transactions</span></a>
+          <ul aria-expanded='false' class='collapse first-level'>
+            <li class='sidebar-item'>
+              <a class='sidebar-link waves-effect waves-dark' href='shipping.php?do=billings' aria-expanded='false'><i
+                  class='mdi mdi-credit-card-plus' style='color:#7460ee'></i><span class='hide-menu'> Billing
+                </span></a>
+            </li>
+            <li class='sidebar-item'><a href='paymentlist_online.php' class='sidebar-link'><i
+                  class='fas fa-donate'></i><span class='hide-menu'>
+                  Paypal payment list
+                </span></a></li>
+          </ul>
+        </li>
+
+        <li class='sidebar-item'>
+          <a class='sidebar-link has-arrow waves-effect waves-dark' href='javascript:void(0)' aria-expanded='false'><i
+              class='fas fa-users'></i><span class='hide-menu'> User List</span></a>
+          <ul aria-expanded='false' class='collapse first-level'>
+            <li class='sidebar-item'>
+              <a class='sidebar-link waves-effect waves-dark' href='customer.php?do=main_client'
+                aria-expanded='false'><i class='mdi mdi-account-multiple-plus'></i><span class='hide-menu'> Customer
+                  List </span></a>
+            </li>
+
+            <li class='sidebar-item'>
+              <a class='sidebar-link waves-effect waves-dark' href='driver.php?do=main_driver' aria-expanded='false'><i
+                  class='mdi mdi-car'></i><span class='hide-menu'> Driver List</span></a>
+            </li>
+          </ul>
+        </li>
+
+        <li class='sidebar-item'>
+          <a class='sidebar-link waves-effect waves-dark sidebar-link' href='../logout.php' aria-expanded='false'><i
+              class='fa fa-power-off m-r-5 m-l-5'></i><span class='hide-menu'> Log Out</span></a>
+        </li>
+      </ul>
+
+    </nav>
+    <!-- End Sidebar navigation -->
+  </div>
+  <!-- End Sidebar scroll-->
+</aside>
