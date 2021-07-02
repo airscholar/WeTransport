@@ -1,0 +1,111 @@
+<div>
+    <style type="text/css">
+        .alert {
+            margin-top: 20px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+    </style>
+
+    <!-- Sales chart -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Sales chart -->
+    <!-- ============================================================== -->
+
+
+    <!-- ============================================================== -->
+    <!-- Table -->
+    <!-- ============================================================== -->
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <ul class="nav nav-pills m-t-30 m-b-30">
+                        <li class=" nav-item"> <a href="#navpills-1" class="nav-link active" data-toggle="tab"
+                                aria-expanded="false">
+                                <h5 class="card-title">0</h5>
+                            </a> </li>
+                        <li class="nav-item"> <a href="#" class="nav-link">
+                                <h5 class="card-title">0</h5>
+                            </a> </li>
+                    </ul>
+                    <div class="tab-content br-n pn">
+                        <div id="navpills-1" class="tab-pane active">
+                            <div class="row">
+                                <!-- Shipping List -->
+                                <div id="msgholder"></div>
+                                <div class="table-responsive">
+                                    <table id="zero_config" class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th><b>Tracking</b></th>
+                                                <th><b>Receivier</b></th>
+                                                <th><b>Quantity</b></th>
+                                                <th><b>Sha</b></th>
+                                                <th><b>Delivery Date</b></th>
+                                                <th align='center'><b>Count</b></th>
+                                                <th><b>Status</b></th>
+                                                <th><b>Count</b></th>
+                                                <th data-hide="all" align='center'><b>Action</b></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="projects-tbl">
+                                            <tr class="card-hover">
+                                                <td><b><a href="#">
+                                                            a</a></b></td>
+                                                <td class="clients-rpt" style="text-align: left;">Receiver Name</td>
+                                                <td>Quantity</td>
+                                                <td>Dest_Country | Dest_City</td>
+                                                <td>Created_date</td>
+                                                <td><a href="#" target="_blank"><input type=image
+                                                            src="assets/images/icon_map.png"></a></td>
+                                                <td><span style="background: red;"
+                                                        class="label label-large">Status</span></td>
+                                                <td>Level</td>
+                                                <td>
+                                                    <a href="#" data-toggle="tooltip" data-placement="top"
+                                                        title="Edit"><i style="color:#343a40" class="ti-pencil"></i></a>
+                                                    <a href="#" target="_blank" data-toggle="tooltip"
+                                                        data-placement="top" title="Invoice"><i style="color:#343a40"
+                                                            class="ti-printer"></i></a>
+                                                    <a href="#" target="_blank" data-toggle="tooltip"
+                                                        data-placement="top" title="Language"><i style="color:#343a40"
+                                                            class="ti-bookmark-alt"></i></a>
+                                                    <a href="#" data-toggle="tooltip" data-placement="top"
+                                                        title="Update"><i style="color:#20c997"
+                                                            class="ti-reload"></i></a>
+                                                    <a href="#" data-toggle="tooltip" data-placement="top"
+                                                        title="Delivery"><i style="color:#2962FF"
+                                                            class="ti-package"></i></a>
+                                                    <a id="deletePackage" data-rel="deletedata" class="delete"
+                                                        data-toggle="tooltip" data-placement="top" title="Delete"><i
+                                                            style="color:#343a40" class="ti-trash"></i></a>
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- end Shipping List -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+            $('table').stacktable();
+        </script>
+
+
+    </div>
