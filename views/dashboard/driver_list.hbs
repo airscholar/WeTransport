@@ -1,0 +1,79 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <!-- Column -->
+
+        <div class="col-lg-12 col-xl-12 col-md-12">
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="m-t-40">
+                        <div class="d-flex">
+                            <div class="mr-auto">
+                                <div class="form-group">
+                                    <a href="drivers_add.php"><button type="button" class="btn btn-primary btn"><i
+                                                class="ti-plus" aria-hidden="true"></i> Create New Driver</button></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="outer_div">
+
+                        <table id="zero_config" class="table table-condensed table-hover table-striped"
+                            data-pagination="true" data-page-size="5">
+                            <thead>
+                                <tr>
+                                    <th><b>Driver Name</b></th>
+                                    <th class="text-center"><b>Email Address</b></th>
+                                    <th class="text-center"><b>Vehicle Enrollment</b></th>
+                                    <th class="text-center"><b>Vehicle code</b></th>
+                                    <th class="text-center"><b>Driver User Status</b></th>
+                                    <th class="text-center"><b>Level</b></th>
+                                    <th class="text-center"><b>Last Login</b></th>
+                                    <th class="text-center"><b>Actions</b></th>
+                                </tr>
+                            </thead>
+
+
+                            <tbody>
+                                <tr>
+                                    <td>JOSE OSORIO</td>
+                                    <td>driver@demo.com</td>
+                                    <td class="text-center"><i class="icon-prepend icon-truck"></i> MNW952</td>
+                                    <td class="text-center"><i class="icon-prepend icon-tag"></i> 81</td>
+                                    <td class="text-center"><span
+                                            style="font-size: 15px; color: rgb(72, 207, 173); --darkreader-inline-color:#56d3b3;"
+                                            class="ti-check" data-toggle="tooltip" data-placement="top" title="Active"
+                                            data-darkreader-inline-color=""></span> Active</td>
+                                    <td class="text-center"><span
+                                            style="font-size: 20px; color: rgb(72, 207, 173); --darkreader-inline-color:#56d3b3;"
+                                            class="ti-face-smile" data-toggle="tooltip" data-placement="top"
+                                            title="User Driver" data-darkreader-inline-color=""></span></td>
+                                    <td class="text-center">03. Jul. 2021 16:44</td>
+                                    <td align="center">
+                                        <a href="drivers_edit.php?user=2" data-toggle="tooltip" data-placement="top"
+                                            title="Edit"><i
+                                                style="color: rgb(52, 58, 64); --darkreader-inline-color:#c3beb6;"
+                                                class="ti-pencil" data-darkreader-inline-color=""></i></a>
+                                        <a href="newsletter.php?email=driver@demo.com" data-toggle="tooltip"
+                                            data-placement="top" title="Email"><i
+                                                style="color: rgb(52, 58, 64); --darkreader-inline-color:#c3beb6;"
+                                                class="ti-email" data-darkreader-inline-color=""></i></a>
+
+                                        <a onclick="eliminar('2')" id="item_2" class="delete" data-toggle="tooltip"
+                                            data-placement="top" title="Delete"><i
+                                                style="color: rgb(52, 58, 64); --darkreader-inline-color:#c3beb6;"
+                                                class="ti-trash" data-darkreader-inline-color=""></i></a>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Column -->
+    </div>
+</div>
