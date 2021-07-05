@@ -16,8 +16,10 @@ const loadDriverList = asyncHandler(async (req, res) => {
   });
 });
 const loadDriverEdit = asyncHandler(async (req, res) => {
-  // const { driver_id } = req.params;
-  const driver = await DriverModel.findById("60e1efb874ff9bc6c0e907cf");
+  const { driver_id } = req.params;
+  const driver = await DriverModel.findById(driver_id);
+
+  if (!driver) return res.status(StatusCodes.NOT_FOUND).json({ message: "Driver Not Found" });
 
   res.render("dashboard/driver_edit", {
     layout: "layouts/layout_main",
@@ -25,6 +27,17 @@ const loadDriverEdit = asyncHandler(async (req, res) => {
     date: moment(new Date()).format("DD-MM-YYYY"),
     driver: driver,
   });
+});
+
+const deleteDriver = asyncHandler(async (req, res) => {
+  const { driver_id } = req.params;
+  const driver = await DriverModel.findById(driver_id);
+
+  if (!driver) return res.status(StatusCodes.NOT_FOUND).json({ message: "Driver Not Found" });
+
+  driver.remove();
+
+  res.status(StatusCodes.OK).json({ message: "Driver removed successfully!" });
 });
 
 const driverUpdate = asyncHandler(async (req, res) => {
@@ -81,5 +94,6 @@ module.exports = {
   driverUpdate,
   loadDriverAdd,
   addDriver,
+  deleteDriver,
   retrieveDrivers,
 };

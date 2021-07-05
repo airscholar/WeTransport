@@ -6,7 +6,6 @@ const { shipmentController } = require("../controllers/index");
 
 const { customerController } = require("../controllers/index");
 
-/* GET login home page. */
 router.route("/customerList").get(customerController.loadCustomerList);
 router.route("/customerAdd").get(customerController.loadCustomerAdd);
 router.route("/courierList").get(shipmentController.loadCourierList);
@@ -35,6 +34,7 @@ router
     ],
     shipmentController.driverUpdate
   );
+
 router
   .route("/driverEdit/:driver_id")
   .get(shipmentController.loadDriverEdit)
@@ -56,6 +56,9 @@ router
     ],
     shipmentController.driverUpdate
   );
+
+router.route("/driverDelete/:driver_id").delete(shipmentController.deleteDriver);
+
 router
   .route("/driverAdd")
   .get(shipmentController.loadDriverAdd)
