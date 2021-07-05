@@ -1,0 +1,102 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <!-- Column -->
+
+        <div class="col-lg-12 col-xl-12 col-md-12">
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="m-t-40">
+                        <div class="d-flex">
+                            <div class="mr-auto">
+                                <div class="form-group">
+                                    <a href="driverAdd"><button type="button" class="btn btn-primary btn"><i
+                                                class="ti-plus" aria-hidden="true"></i> Create New Driver</button></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="outer_div">
+
+                        <table id="zero_config" class="table table-condensed table-hover table-striped"
+                            data-pagination="true" data-page-size="5">
+                            <thead>
+                                <tr>
+                                    <th><b>Driver Name</b></th>
+                                    <th class="text-center"><b>Email Address</b></th>
+                                    <th class="text-center"><b>Vehicle Enrollment</b></th>
+                                    <th class="text-center"><b>Vehicle code</b></th>
+                                    <th class="text-center"><b>Driver User Status</b></th>
+                                    <th class="text-center"><b>Level</b></th>
+                                    <th class="text-center"><b>Creation Date</b></th>
+                                    <th class="text-center"><b>Actions</b></th>
+                                </tr>
+                            </thead>
+
+
+                            <tbody>
+                                {{#each driversList}}
+                                <tr>
+                                    <td> {{first_name}} {{last_name}}</td>
+                                    <td>{{email}}</td>
+                                    <td class="align-left"><i class="icon-prepend icon-truck"></i>
+                                        {{vehicle_reg_no}}</td>
+                                    <td class="align-left"><i class="icon-prepend icon-tag"></i>
+                                        {{vehicle_code}}</td>
+                                    <td class="text-center"><span
+                                            style="font-size: 15px; color: rgb(72, 207, 173); --darkreader-inline-color:#56d3b3;"
+                                            class="ti-check" data-toggle="tooltip" data-placement="top" title="Active"
+                                            data-darkreader-inline-color=""></span> Active</td>
+                                    <td class="text-center"><span
+                                            style="font-size: 20px; color: rgb(72, 207, 173); --darkreader-inline-color:#56d3b3;"
+                                            class="ti-face-smile" data-toggle="tooltip" data-placement="top"
+                                            title="User Driver" data-darkreader-inline-color=""></span></td>
+                                    <td class="text-center">{{created_at}}</td>
+                                    <td align="center">
+                                        <a href="driverEdit/{{_id}}" data-toggle="tooltip" data-placement="top"
+                                            title="Edit"><i
+                                                style="color: rgb(52, 58, 64); --darkreader-inline-color:#c3beb6;"
+                                                class="ti-pencil" data-darkreader-inline-color=""></i></a>
+                                        <i style="color: rgb(52, 58, 64); --darkreader-inline-color:#c3beb6;"
+                                            class="ti-trash" data-toggle="tooltip" data-placement="top" title="Delete"
+                                            data-darkreader-inline-color="" onclick="delete_driver('{{_id}}')"></i>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Column -->
+    </div>
+</div>
+<script type="text/javascript">
+    async function delete_driver(driver_id) {
+        try {
+            const response = await axios.delete('/driverDelete/' + driver_id);
+            console.log(response);
+            return Swal.fire({
+                title: 'Success!',
+                text: response.data.message,
+                icon: 'success',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.reload();
+                }
+            });
+        } catch (error) {
+            console.log(error);
+            return Swal.fire({
+                title: 'Error!',
+                text: error,
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
+    }
+</script>
