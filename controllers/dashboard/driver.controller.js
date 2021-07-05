@@ -1,14 +1,14 @@
-const DriverModel = require("../../../database/models/driver.model");
-const ErrorResponse = require("../../../utilities/errorResponse.helper");
+const DriverModel = require("../../database/models/driver.model");
+const ErrorResponse = require("../../utilities/errorResponse.helper");
 const { StatusCodes } = require("http-status-codes");
 const { validationResult } = require("express-validator");
-const { asyncHandler } = require("../../../middlewares/asyncHandler.middleware");
+const { asyncHandler } = require("../../middlewares/asyncHandler.middleware");
 const moment = require("moment");
 
 /////////DRIVERS
 const loadDriverList = asyncHandler(async (req, res) => {
   const drivers = await DriverModel.find();
-  res.render("dashboard/driver_list", {
+  res.render("dashboard/driver/driver_list", {
     layout: "layouts/layout_main",
     title: "Drivers | We Transport",
     date: moment(new Date()).format("DD-MM-YYYY"),
@@ -21,7 +21,7 @@ const loadDriverEdit = asyncHandler(async (req, res) => {
 
   if (!driver) return res.status(StatusCodes.NOT_FOUND).json({ message: "Driver Not Found" });
 
-  res.render("dashboard/driver_edit", {
+  res.render("dashboard/driver/driver_edit", {
     layout: "layouts/layout_main",
     title: "Drivers | We Transport",
     date: moment(new Date()).format("DD-MM-YYYY"),
@@ -55,7 +55,7 @@ const driverUpdate = asyncHandler(async (req, res) => {
 });
 
 const loadDriverAdd = asyncHandler(async (req, res) => {
-  res.render("dashboard/driver_add", {
+  res.render("dashboard/driver/driver_add", {
     layout: "layouts/layout_main",
     title: "Drivers | We Transport",
     date: moment(new Date()).format("DD-MM-YYYY"),
@@ -81,13 +81,6 @@ const addDriver = asyncHandler(async (req, res) => {
   });
 });
 
-const retrieveDrivers = asyncHandler(async (req, res) => {
-  return res.status(StatusCodes.CREATED).json({
-    message: "Drivers Fetched Successfully!",
-    result: drivers,
-  });
-});
-
 module.exports = {
   loadDriverList,
   loadDriverEdit,
@@ -95,5 +88,4 @@ module.exports = {
   loadDriverAdd,
   addDriver,
   deleteDriver,
-  retrieveDrivers,
 };

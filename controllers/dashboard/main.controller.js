@@ -5,7 +5,7 @@ const { StatusCodes } = require("http-status-codes");
 const { validationResult } = require("express-validator");
 const { asyncHandler } = require("../../middlewares/asyncHandler.middleware");
 
-const { loadDriverList, loadDriverEdit, driverUpdate, deleteDriver, loadDriverAdd, addDriver, retrieveDrivers } = require("../dashboard/driver/driver.controller");
+const { loadDriverList, loadDriverEdit, driverUpdate, deleteDriver, loadDriverAdd, addDriver } = require("./driver.controller");
 
 const loadShipmentList = (req, res) => {
   res.render("dashboard/shipment_list", {
@@ -44,7 +44,6 @@ module.exports = {
   loadDriverList,
   loadDriverAdd,
   loadDriverEdit,
-  retrieveDrivers,
   addDriver,
   driverUpdate,
   deleteDriver,
