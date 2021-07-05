@@ -1,4 +1,11 @@
 const moment = require("moment");
+const DriverModel = require("../../database/models/driver.model");
+const ErrorResponse = require("../../utilities/errorResponse.helper");
+const { StatusCodes } = require("http-status-codes");
+const { validationResult } = require("express-validator");
+const { asyncHandler } = require("../../middlewares/asyncHandler.middleware");
+
+const { loadDriverList, loadDriverEdit, driverUpdate, loadDriverAdd, addDriver, retrieveDrivers } = require("../dashboard/driver/driver.controller");
 
 const loadShipmentList = (req, res) => {
   res.render("dashboard/shipment_list", {
@@ -28,20 +35,6 @@ const loadCourierAdd = (req, res) => {
     date: moment(new Date()).format("DD-MM-YYYY"),
   });
 };
-const loadDriverList = (req, res) => {
-  res.render("dashboard/driver_list", {
-    layout: "layouts/layout_main",
-    title: "Shipments | We Transport",
-    date: moment(new Date()).format("DD-MM-YYYY"),
-  });
-};
-const loadDriverAdd = (req, res) => {
-  res.render("dashboard/driver_add", {
-    layout: "layouts/layout_main",
-    title: "Shipments | We Transport",
-    date: moment(new Date()).format("DD-MM-YYYY"),
-  });
-};
 
 module.exports = {
   loadShipmentList,
@@ -50,4 +43,8 @@ module.exports = {
   loadCourierAdd,
   loadDriverList,
   loadDriverAdd,
+  loadDriverEdit,
+  retrieveDrivers,
+  addDriver,
+  driverUpdate,
 };

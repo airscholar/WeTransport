@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <h3>
-        Add New Customer
+        Add New Driver
     </h3>
     <div class="row justify-content-center">
         <!-- Column -->
@@ -8,24 +8,24 @@
             <div class="card">
 
                 <div class="card-body">
-                    <!-- <div id="loader" style="display:none"></div> -->
+                    <div id="loader" style="display:none"></div>
                     <div id="resultados_ajax"></div>
-                    <form class="login-form" id="admin_form" method="post">
+                    <form class="login-form" id="driver_form" method="post">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group position-relative">
                                     <label>Name <span class="text-danger">*</span></label>
                                     <i class="mdi mdi-account ml-3 icons"></i>
-                                    <input type="text" class="form-control pl-5" placeholder="First name" name="fname"
-                                        required="">
+                                    <input type="text" class="form-control pl-5" placeholder="First name"
+                                        name="first_name" required="">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group position-relative">
                                     <label>Surname <span class="text-danger">*</span></label>
                                     <i class="mdi mdi-account ml-3 icons"></i>
-                                    <input type="text" class="form-control pl-5" placeholder="Last Name" name="lname"
-                                        required="">
+                                    <input type="text" class="form-control pl-5" placeholder="Last Name"
+                                        name="last_name" required="">
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -40,7 +40,7 @@
                                 <div class="form-group position-relative">
                                     <label>Telephone Code <span class="text-danger">*</span></label>
                                     <i class="mdi mdi-numeric ml-3 icons"></i>
-                                    <input type="text" class="form-control pl-5" name="code_phone"
+                                    <input type="text" class="form-control pl-5" name="phone_code"
                                         placeholder="Select Code" list="browsersS" autocomplete="off" required="">
                                     <datalist id="browsersS">
                                         <option data-countrycode="AF" value="93">Afghanistan (+93)</option>
@@ -337,15 +337,15 @@
                                 <div class="form-group position-relative">
                                     <label># Phone <span class="text-danger">*</span></label>
                                     <i class="mdi mdi-phone-plus ml-3 icons"></i>
-                                    <input type="number" class="form-control pl-5" name="phone" placeholder="# Phone"
-                                        required="">
+                                    <input type="number" class="form-control pl-5" name="phone_number"
+                                        placeholder="# Phone" required="">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group position-relative">
                                     <label>Vehicle Registration Number<span class="text-danger">*</span></label>
                                     <i class="mdi mdi-map-marker ml-3 icons"></i>
-                                    <input type="text" class="form-control pl-5" name="city"
+                                    <input type="text" class="form-control pl-5" name="vehicle_reg_no"
                                         placeholder="Vehicle registration number" required="">
                                 </div>
                             </div>
@@ -353,8 +353,8 @@
                                 <div class="form-group position-relative">
                                     <label>Vehicle Code<span class="text-danger">*</span></label>
                                     <i class="mdi mdi-map-marker ml-3 icons"></i>
-                                    <input type="text" class="form-control pl-5" name="city" placeholder="Vehicle Code"
-                                        required="">
+                                    <input type="text" class="form-control pl-5" name="vehicle_code"
+                                        placeholder="Vehicle Code" required="">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -661,67 +661,11 @@
                                 <div class="form-group position-relative">
                                     <label>Postal Code<span class="text-danger">*</span></label>
                                     <i class="mdi mdi-mailbox ml-3 icons"></i>
-                                    <input type="text" class="form-control pl-5" name="postal" placeholder="Postal Code"
-                                        required="">
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="phoneNumber1">User Status</label>
-                                    <div class="btn-group">
-                                        <label class="btn">
-                                            <div class="custom-control custom-radio">
-                                                <input type="radio" id="customRadio4" class="custom-control-input"
-                                                    name="active" value="1" checked="checked">
-                                                <label class="custom-control-label" for="customRadio4">
-                                                    Active</label>
-                                            </div>
-                                        </label>
-                                        <label class="btn">
-                                            <div class="custom-control custom-radio">
-                                                <input type="radio" id="customRadio3" class="custom-control-input"
-                                                    name="active" value="0">
-                                                <label class="custom-control-label" for="customRadio3">
-                                                    Inactive</label>
-                                            </div>
-                                        </label>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="phoneNumber1">Newsletter Subscriber</label>
-                                    <div class="btn-group" data-toggle="buttons">
-                                        <label class="btn">
-                                            <div class="custom-control custom-radio">
-                                                <input type="radio" id="customRadio4" name="newsletter" value="1"
-                                                    checked="checked" class="custom-control-input">
-                                                <label class="custom-control-label" for="customRadio4"> Yes</label>
-                                            </div>
-                                        </label>
-                                        <label class="btn">
-                                            <div class="custom-control custom-radio">
-                                                <input type="radio" id="customRadio5" name="newsletter" value="0"
-                                                    class="custom-control-input">
-                                                <label class="custom-control-label" for="customRadio5"> No</label>
-                                            </div>
-                                        </label>
-                                    </div>
+                                    <input type="text" class="form-control pl-5" name="postal_code"
+                                        placeholder="Postal Code" required="">
                                 </div>
                             </div>
                         </div>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="lastName1">User Avatar</label>
-                                    <input class="form-control" id="avatar" name="avatar" type="file">
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -733,20 +677,62 @@
                         </div>
 
                         </section>
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                <button class="btn btn-outline-primary btn-confirmation" id="save_data" name="save_data"
-                                    type="submit">Add New User<span><i class="icon-ok"></i></span></button>
-                                <a href="customers_list.php" class="btn btn-outline-secondary btn-confirmation"><span><i
-                                            class="ti-share-alt"></i></span> Return to the dashboard</a>
-                            </div>
-                        </div>
-                        <input name="locker" id="locker" type="hidden" value="679510">
                     </form>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <button class="btn btn-outline-primary btn-confirmation" id="add_driver"
+                                onclick="add_driver()">Add New Driver
+                                <span><i class="icon-ok"></i></span></button>
+                            <a href="driverList" class="btn btn-outline-secondary btn-confirmation"><span><i
+                                        class="ti-share-alt"></i></span> Return to Driver List</a>
+                        </div>
+                    </div>
                 </div>
             </div>
-
         </div>
         <!-- Column -->
     </div>
 </div>
+
+<script type="text/javascript">
+    async function add_driver() {
+        var driver_data = $('#driver_form').serializeArray().reduce(function (obj, item) {
+            obj[item.name] = item.value.trim();
+            return obj;
+        }, {});
+
+        if (driver_data.first_name === "" || driver_data.address === "" || driver_data.city === "" || driver_data.country === "" || driver_data.email === "" || driver_data.gender === "" || driver_data.last_name === "" || driver_data.phone_number === "" || driver_data.vehicle_code === "" || driver_data.vehicle_reg_no === "") {
+            return Swal.fire({
+                title: 'Error!',
+                text: 'Form validation failed. Please check and try again!',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        };
+
+        try {
+            const response = await axios.post('/driverEdit', driver_data);
+            console.log(response);
+            return Swal.fire({
+                title: 'Success!',
+                text: response.data.message,
+                icon: 'success',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location = '/driverList';
+                }
+            });
+        } catch (error) {
+            console.log(error);
+            return Swal.fire({
+                title: 'Error!',
+                text: error,
+                icon: 'error',
+                confirmButtonText: 'Cool'
+            });
+        }
+
+        console.log(driver_data);
+    }
+</script>

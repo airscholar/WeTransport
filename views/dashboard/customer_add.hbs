@@ -365,12 +365,24 @@
                                         required="">
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group position-relative">
                                     <label>Full Address<span class="text-danger">*</span></label>
                                     <i class="mdi mdi-map-marker-radius ml-3 icons"></i>
                                     <input type="text" class="form-control pl-5" name="address"
                                         placeholder="Full Address" required="">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group position-relative">
+                                    <label>Gender<span class="text-danger">*</span></label>
+                                    <i class="mdi mdi-map-marker-multiple ml-3 icons"></i>
+                                    <input type="text" class="form-control pl-5" name="gender"
+                                        placeholder="Select Gender" list="browsers" autocomplete="off" required="">
+                                    <datalist id="browsers">
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </datalist>
                                 </div>
                             </div>
                             <div class="col-md-6">
