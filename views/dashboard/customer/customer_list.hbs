@@ -74,7 +74,8 @@
                                                     data-original-title="User Customer"></span></td>
                                             <td class="text-center">{{created_at}}</td>
                                             <td align="center">
-                                                <a href="customerEdit/{{_id}}" data-toggle="tooltip"
+                                                {{#if ../status }}
+                                                <a href="/customerEdit/{{_id}}" data-toggle="tooltip"
                                                     data-placement="top" title="Edit"><i
                                                         style="color: rgb(52, 58, 64); --darkreader-inline-color:#c3beb6;"
                                                         class="ti-pencil" data-darkreader-inline-color=""></i></a>
@@ -82,6 +83,13 @@
                                                     class="ti-trash" data-toggle="tooltip" data-placement="top"
                                                     title="Delete" data-darkreader-inline-color=""
                                                     onclick="delete_customer('{{_id}}')"></i>
+                                                {{else}}
+                                                <a href="/shipmentAdd/{{_id}}">
+                                                    <i class='mdi mdi-cube-send'
+                                                        style="color: rgb(52, 58, 64); --darkreader-inline-color:#c3beb6;"
+                                                        data-toggle="tooltip" title="Add Shipment"></i>
+                                                </a>
+                                                {{/if}}
                                             </td>
                                         </tr>
                                         {{/each}}
