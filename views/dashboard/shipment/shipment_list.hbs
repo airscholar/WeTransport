@@ -20,7 +20,7 @@
                         <div class="d-flex">
                             <div class="mr-auto">
                                 <div class="form-group">
-                                    <a href="driverAdd"><button type="button" class="btn btn-primary btn"><i
+                                    <a href="customerList/false"><button type="button" class="btn btn-primary btn"><i
                                                 class="ti-plus" aria-hidden="true"></i> Create New Shipment</button></a>
                                 </div>
                             </div>
@@ -33,44 +33,40 @@
                                 <tr>
                                     <th><b>Tracking</b></th>
                                     <th><b>Receivier</b></th>
-                                    <th><b>Quantity</b></th>
-                                    <th><b>Sha</b></th>
+                                    <th><b>Shipping Mode</b></th>
+                                    <th><b>Payment Method</b></th>
                                     <th><b>Delivery Date</b></th>
                                     <th align='center'><b>Count</b></th>
                                     <th><b>Status</b></th>
-                                    <th><b>Count</b></th>
                                     <th data-hide="all" align='center'><b>Action</b></th>
                                 </tr>
                             </thead>
                             <tbody id="projects-tbl">
+                                {{#each shipmentLists}}
                                 <tr class="card-hover">
-                                    <td><b><a href="#">
-                                                a</a></b></td>
-                                    <td class="clients-rpt" style="text-align: left;">Receiver Name</td>
-                                    <td>Quantity</td>
-                                    <td>Dest_Country | Dest_City</td>
-                                    <td>Created_date</td>
-                                    <td><a href="#" target="_blank"><input type=image
-                                                src="assets/images/icon_map.png"></a></td>
-                                    <td><span style="background: red;" class="label label-large">Status</span></td>
-                                    <td>Level</td>
+                                    <td><b>{{shipment_prefix}}{{order_number_tracking}}</b></td>
+                                    <td class="clients-rpt" style="text-align: left;">{{receiver_name}}</td>
+                                    <td>{{shipping_mode}}</td>
+                                    <td>{{payment_method}}</td>
+                                    <td>{{created_at}}</td>
+                                    <td>{{courier_company}}</td>
+                                    <td><span style="background: grey;"
+                                            class="label label-large">{{delivery_status}}</span></td>
                                     <td>
-                                        <a href="#" data-toggle="tooltip" data-placement="top" title="Edit"><i
-                                                style="color:#343a40" class="ti-pencil"></i></a>
-                                        <a href="#" target="_blank" data-toggle="tooltip" data-placement="top"
-                                            title="Invoice"><i style="color:#343a40" class="ti-printer"></i></a>
-                                        <a href="#" target="_blank" data-toggle="tooltip" data-placement="top"
-                                            title="Language"><i style="color:#343a40" class="ti-bookmark-alt"></i></a>
-                                        <a href="#" data-toggle="tooltip" data-placement="top" title="Update"><i
-                                                style="color:#20c997" class="ti-reload"></i></a>
-                                        <a href="#" data-toggle="tooltip" data-placement="top" title="Delivery"><i
-                                                style="color:#2962FF" class="ti-package"></i></a>
-                                        <a id="deletePackage" data-rel="deletedata" class="delete" data-toggle="tooltip"
-                                            data-placement="top" title="Delete"><i style="color:#343a40"
-                                                class="ti-trash"></i></a>
+                                        <a href="/shipmentEdit/{{_id}}" data-toggle="tooltip" data-placement="top"
+                                            title="Edit"><i style="color:#343a40" class="ti-pencil"></i></a>
+                                        <a onclick="delete_shipment('{{_id}}')" id="deletePackage" data-rel="deletedata"
+                                            class="delete" data-toggle="tooltip" data-placement="top" title="Delete"><i
+                                                style="color:#343a40" class="ti-trash"></i></a>
                                     </td>
                                 </tr>
-
+                                {{else}}
+                                <tr>
+                                    <td>
+                                        <center>No shipments</center>
+                                    </td>
+                                </tr>
+                                {{/each}}
                             </tbody>
                         </table>
                     </div>
@@ -79,17 +75,37 @@
             </div>
         </div>
     </div>
-</div>
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    });
-    $('table').stacktable();
-</script>
-
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+        $('table').stacktable();
+    </script>
+    <script type="text/javascript">
+        async function delete_shipment(shipment_id) {
+            try {
+                const response = await axios.delete('/shipmentDelete/' + shipment_id);
+                console.log(response);
+                return Swal.fire({
+                    title: 'Success!',
+                    text: response.data.message,
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.reload();
+                    }
+                });
+            } catch (error) {
+                console.log(error);
+                return Swal.fire({
+                    title: 'Error!',
+                    text: error,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            }
+        }
+    </script>
 </div>
