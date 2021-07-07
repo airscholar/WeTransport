@@ -11,8 +11,9 @@ const loadDriverList = asyncHandler(async (req, res) => {
   res.render("dashboard/driver/driver_list", {
     layout: "layouts/layout_main",
     title: "Drivers | We Transport",
-    date: moment(new Date()).format("DD-MM-YYYY"),
+    date: moment().format("LLLL"),
     driversList: drivers,
+    user: req.user,
   });
 });
 const loadDriverEdit = asyncHandler(async (req, res) => {
@@ -24,8 +25,9 @@ const loadDriverEdit = asyncHandler(async (req, res) => {
   res.render("dashboard/driver/driver_edit", {
     layout: "layouts/layout_main",
     title: "Drivers | We Transport",
-    date: moment(new Date()).format("DD-MM-YYYY"),
+    date: moment().format("LLLL"),
     driver: driver,
+    user: req.user,
   });
 });
 
@@ -58,7 +60,8 @@ const loadDriverAdd = asyncHandler(async (req, res) => {
   res.render("dashboard/driver/driver_add", {
     layout: "layouts/layout_main",
     title: "Drivers | We Transport",
-    date: moment(new Date()).format("DD-MM-YYYY"),
+    date: moment().format("LLLL"),
+    user: req.user,
   });
 });
 
