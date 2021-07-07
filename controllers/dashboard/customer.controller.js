@@ -6,21 +6,29 @@ const { asyncHandler } = require("../../middlewares/asyncHandler.middleware");
 const CustomerModel = require("../../database/models/customer.model");
 
 const loadCustomerList = asyncHandler(async (req, res) => {
-  const customers = await CustomerModel.find();
+  const { shipment_status } = req.params;
 
-  res.render("dashboard/customer/customer_list", {
+  let OPTS = "";
+  const customers = await CustomerModel.find();
+  OPTS = {
     layout: "layouts/layout_main",
     title: "Customers | We Transport",
-    date: moment(new Date()).format("DD-MM-YYYY"),
+    date: moment().format("LLLL"),
     customers: customers,
-  });
+    user: req.user,
+  };
+  if (shipment_status.toString() == "true") {
+    OPTS.status = true;
+  }
+  res.render("dashboard/customer/customer_list", OPTS);
 });
 
 const loadCustomerAdd = (req, res) => {
   res.render("dashboard/customer/customer_add", {
     layout: "layouts/layout_main",
     title: "Customers | We Transport",
-    date: moment(new Date()).format("DD-MM-YYYY"),
+    date: moment().format("LLLL"),
+    user: req.user,
   });
 };
 
@@ -51,8 +59,9 @@ const loadCustomerEdit = asyncHandler(async (req, res) => {
   res.render("dashboard/customer/customer_edit", {
     layout: "layouts/layout_main",
     title: "Customers | We Transport",
-    date: moment(new Date()).format("DD-MM-YYYY"),
+    date: moment().format("LLLL"),
     customer: customer,
+    user: req.user,
   });
 });
 
