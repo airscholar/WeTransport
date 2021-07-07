@@ -6,6 +6,7 @@ const loadDashboard = (req, res) => {
     layout: "layouts/layout_main",
     title: "Dashboard | We Transport",
     date: moment().format("LLLL"),
+    user: req.user,
   });
 };
 
