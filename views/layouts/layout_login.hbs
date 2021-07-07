@@ -20,19 +20,30 @@
   <!-- Main css -->
   <link href="/assets/theme/css/style.css" rel="stylesheet" type="text/css" />
   <link href="/assets/vendor/sweetalert/dist/sweetalert2.min.css" rel="stylesheet">
+  <script src="/assets/libs/jquery/dist/jquery.min.js"></script>
 </head>
 
 <body>
   <!-- Loader -->
-  <div id="preloader">
-    <div id="status">
-      <div class="spinner">
-        <div class="double-bounce1"></div>
-        <div class="double-bounce2"></div>
+  <div id="main-wrapper">
+    <div id="preloader">
+      <div id="status">
+        <div class="spinner">
+          <div class="double-bounce1"></div>
+          <div class="double-bounce2"></div>
+        </div>
       </div>
     </div>
+    {{>header_login}}
+
+    <div class="page-wrapper">
+      {{{body}}}
+
+      {{>footer}}
+    </div>
   </div>
-  {{>header_login}}
-  {{{body}}}
-  {{>footer}}
   <!-- Back to top -->
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7tHIkJIxsXWMmTDPpbce2VwDSvtqFINU&callback=initMap&libraries=&v=weekly"
+    async></script>
+  <script src="/assets/vendor/axios/axios.min.js"></script>
