@@ -1,65 +1,72 @@
-// const User = require('../../database/models/User.model');
-// const { StatusCodes } = require('http-status-codes');
+const User = require("../../database/models/customer.model");
+const { StatusCodes } = require("http-status-codes");
 // const winston = require('winston');
 // const jwt = require('jsonwebtoken');
 // const config = require('../../config');
 // const cryptoGen = require('../../authentication/cryptoGen');
-// const moment = require('moment');
+const moment = require("moment");
 // const emailService = require('../../services/emailserviceSendGrid');
-const { asyncHandler } = require('../../middlewares/index.middleware');
-// const ErrorResponse = require('../../utilities/errorResponse.helper');
-// const { validationResult } = require('express-validator');
+const { asyncHandler } = require("../../middlewares/index.middleware");
+const ErrorResponse = require("../../utilities/errorResponse.helper");
+const { validationResult } = require("express-validator");
+const bcrypt = require("bcrypt");
 
 const loadLogin = asyncHandler(async (req, res) => {
-  res.render('index', { layout: 'layouts/layout_login.hbs', header_type: 'login' });
+  if (req.user) {
+    return res.redirect("/dashboard");
+  }
+  res.render("index", { layout: "layouts/layout_login.hbs", header_type: "login" });
 });
-// const login = asyncHandler(async (req, res, next) => {
-//   const user = req.user;
-//   try {
-//     req.login(user, { session: false }, async error => {
-//       if (error) {
-//         winston.error(error);
-//         throw new ErrorResponse('Internal Server Error', StatusCodes.INTERNAL_SERVER_ERROR);
-//       }
-//       req.login(user, { session: false }, async error => {
-//         if (error) throw new ErrorResponse('Internal Server Error', StatusCodes.INTERNAL_SERVER_ERROR);
 
-//         let token = await generateUserToken(user);
+const login = asyncHandler(async (req, res, next) => {
+  const { email, password } = req.body;
 
-//         let temp = req.session.passport;
-//         req.session.regenerate(async err => {
-//           req.session.passport = temp;
-//           req.session.save(async err => {
-//             const res_user = await User.findById(user._id).select('-password');
-//             return res.status(StatusCodes.OK).json({ message: 'User logged in successfully', result: res_user, token });
-//           });
-//         });
-//       });
-//     });
-//   } catch (error) {
-//     winston.error(error);
-//     throw new ErrorResponse('Internal Server Error', StatusCodes.INTERNAL_SERVER_ERROR);
-//   }
-// });
+  if (!email || !password) {
+    return next(new ErrorResponse("Please provide an email and password", 400));
+  }
 
-// const generateUserToken = user => {
-//   const body = { _id: user._id, email: user.email };
-//   const accessTokenLife = config.jwtTokenExpiry() * 1000; // 7 days in seconds
-//   const token = jwt.sign({ user: body }, config.jwtTokenSecret(), { expiresIn: accessTokenLife });
-//   return token;
-// };
+  const user = await User.findOne({ email }).select("+password");
 
-// const loggedInUser = asyncHandler(async (req, res, next) => {
-//   const user = await User.findById(req.user.id);
+  if (!user) {
+    return next(new ErrorResponse("Invalid credentials", 401));
+  }
 
-//   res.status(StatusCodes.OK).json({
-//     message: 'User logged in',
-//     result: user,
-//   });
-// });
+  //   check if password matches
+  const isMatch = await user.matchEnteredPassword(password);
+
+  // when not matched
+  if (!isMatch) {
+    return next(new ErrorResponse("Invalid credentials", 401));
+  }
+  sendTokenResponse(user, 200, res);
+});
+
+const sendTokenResponse = async (user, statusCode, res) => {
+  // Create signed JwtToken on the method
+  //   Note the diff between statics and method
+  // statics will be User.staticMethod()
+  // method will be createdUser.method()
+  const token = await user.getSignedJwtToken();
+
+  const options = {
+    //30 days to milliseconds
+    expires: new Date(Date.now() + process.env.JWT_TOKEN_EXPIRY * 24 * 60 * 60 * 1000),
+    httpOnly: true,
+  };
+
+  //add secure to options to determine running capacity
+  if (process.env.NODE_ENV === "production") {
+    options.secure = true;
+  }
+
+  res.status(statusCode).cookie("token", token, options).json({
+    success: true,
+    token,
+  });
+};
 
 const loadRegistration = asyncHandler(async (req, res) => {
-  res.render('register', { layout: 'layouts/layout_login.hbs' });
+  res.render("register", { layout: "layouts/layout_login.hbs" });
 });
 
 const registration = asyncHandler(async (req, res) => {
@@ -77,9 +84,9 @@ const registration = asyncHandler(async (req, res) => {
     // If we have gotten this far, return success
     emailService.emailRegistrationNotification(user, req.ip);
 
-    res.status(StatusCodes.CREATED).json({ message: 'User registered successfully', result: user, token });
+    res.header("auth-token", token).status(StatusCodes.CREATED).json({ message: "User registered successfully", result: user, token });
   } catch (err) {
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: 'User registration failed' });
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: "User registration failed" });
   }
 });
 
@@ -192,7 +199,7 @@ const registration = asyncHandler(async (req, res) => {
 module.exports = {
   loadLogin,
   loadRegistration,
-  // login,
+  login,
   // registration,
   // logout,
   // passwordReset,
