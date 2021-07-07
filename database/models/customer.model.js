@@ -1,4 +1,7 @@
+const crypto = require("crypto");
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const customerSchema = mongoose.Schema({
   first_name: { type: String, required: true },
@@ -16,10 +19,31 @@ const customerSchema = mongoose.Schema({
   user_status: { type: Boolean, default: true },
   avatar: { type: String },
   notes: { type: String },
+  role: { type: String },
   created_at: { type: Date, default: Date.now },
   modified_at: { type: Date, default: Date.now },
   created_by: { type: String },
   modified_by: { type: String },
 });
+
+customerSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
+    next();
+  }
+
+  const salt = await bcrypt.genSalt();
+  this.password = await bcrypt.hash(this.password, salt);
+});
+
+// Sign JWT and return
+customerSchema.methods.getSignedJwtToken = async function () {
+  return jwt.sign({ id: this._id }, process.env.JWT_TOKEN_SECRET, {
+    expiresIn: process.env.JWT_TOKEN_EXPIRY * 24 * 60 * 60 * 1000,
+  });
+};
+// Match user password with entered password
+customerSchema.methods.matchEnteredPassword = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
 
 module.exports = mongoose.model("wetransport_customer", customerSchema);
