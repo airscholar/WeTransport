@@ -1,9 +1,115 @@
 <div class="page-breadcrumb">
     <div class="row">
-        <div class="col-5 align-self-center">
-            <h4 class="page-title">Dashboard</h4>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-md-flex align-items-center">
+                            <div>
+                                <h4 class="card-title">Sales Summary</h4>
+                                <h5 class="card-subtitle">summary</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!-- column -->
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <!-- column -->
+                                    <!-- col -->
+                                    <div class="col-5 col-sm-3 col-md-4">
+                                        <div class="d-flex align-items-center">
+                                            <div class="m-r-10"><a href="courier.php?do=list_courier"><span
+                                                        class="text-secondary display-5"><i
+                                                            class="mdi mdi-package-variant-closed"></i></a></span></div>
+                                            <div><span><a href="courier.php?do=list_courier">
+                                                        0
+                                                    </a></span>
+                                                <h4 class="font-medium m-b-0">
+                                                    0
+                                                </h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- col -->
+                                    <div class="col-5 col-sm-3 col-md-4">
+                                        <div class="d-flex align-items-center">
+                                            <div class="m-r-10"><a href="pickup.php?do=list_pickup"><span
+                                                        class="text-secondary display-5"><i
+                                                            class="mdi mdi-clock-fast"></i></a></span></div>
+                                            <div><span><a href="pickup.php?do=list_pickup">
+                                                        0
+                                                    </a></span>
+                                                <h4 class="font-medium m-b-0">
+                                                    0
+                                                </h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-            <strong>Dashboard goes here</strong>
+                                <div class="card-body border-top">
+                                    <div class="row m-t-0 m-b-0">
+                                        <!-- col -->
+                                        <div class="col-6 col-sm-6 col-md-6">
+                                            <div class="d-flex align-items-center">
+                                                <div class="m-r-10"><span class="text-orange display-6"><i
+                                                            class="mdi mdi-wallet"></i></span></div>
+                                                <div><span>
+                                                        0
+                                                    </span>
+                                                    <h5 class="font-medium m-b-0">
+                                                        NGN0
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- col -->
+                                        <div class="col-6 col-sm-6 col-md-6 border-left">
+                                            <div class="d-flex align-items-center">
+                                                <div class="m-r-10"><span class="text-primary display-6"><i
+                                                            class="mdi mdi-currency-ngn"></i></span></div>
+                                                <div><span>
+                                                        0
+                                                    </span>
+                                                    <h5 class="font-medium m-b-0">
+                                                        NGN0
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- col -->
+                                    </div>
+                                </div>
+
+                                <div class="card-body border-top">
+                                    <a class="waves-effects btn waves-effect waves-light btn-outline-info accent-4 m-b-7"
+                                        href="shipping.php?do=billings"><i class="ti-stats-up"></i>
+                                        0
+                                    </a>
+                                    &nbsp;
+
+                                    <a class="waves-effects btn waves-effect waves-light btn-outline-dark accent-4 m-b-7"
+                                        href="shipping.php?do=delivered"><i class="mdi mdi-package-variant"></i>
+                                        0
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- column -->
+                            <div class="col-lg-6">
+                                <div class="row" ng-app="app">
+                                    <!-- column -->
+                                    <div class="col-12" ng-controller="myCtrl">
+                                        <canvas ng-init="fetchsales()" id="dvCanvas"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- column -->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
+
     </div>
 </div>
