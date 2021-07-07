@@ -6,7 +6,7 @@
         <div class='row align-items-center'>
           <div class='col-lg-8 col-md-6'>
             <div>
-              <img src='/static/assets/theme/images/user/login.png' class='img-fluid' alt='' />
+              <img src='/assets/theme/images/user/login.png' class='img-fluid' alt='' />
             </div>
           </div>
           <div class='col-lg-4 col-md-6 mt-4 mt-sm-0 pt-2 pt-sm-0'>
@@ -14,13 +14,13 @@
               <div class='text-center'>
                 <h4 class='mb-4'>We Transport</h4>
               </div>
-              <form class='login-form' method='post' name='login_form' id='login-form'>
+              <form class='login-form' method='post' name='login_form' id='login_form'>
                 <div class='row'>
                   <div class='col-lg-12'>
                     <div class='form-group position-relative'>
                       <label>Username<span class='text-danger'>*</span></label>
                       <i class='mdi mdi-account ml-3 icons'></i>
-                      <input type='text' class='form-control pl-5' placeholder='Username' name='username' id='username'
+                      <input type='text' class='form-control pl-5' placeholder='Username' name='email' id='username'
                         required='' />
                     </div>
                   </div>
@@ -36,7 +36,7 @@
 
                   <div class='col-lg-12'>
                     <p class='float-right forgot-pass'>
-                      <a href='forgot-password.php' class='text-dark font-weight-bold'>Forgot your password</a>
+                      <a href='/forgot-password' class='text-dark font-weight-bold'>Forgot your password</a>
                     </p>
                     <div class='form-group'>
                       <div class='custom-control custom-checkbox'>
@@ -45,19 +45,18 @@
                       </div>
                     </div>
                   </div>
-                  <div class='col-lg-12 mb-0'>
-                    <button class='btn btn-primary rounded w-100'>Login</button>
-                    <input name='doLogin' type='hidden' value='1' />
-                  </div>
-                  <br /><br />
-                  <div class='col-12 text-center'>
-                    <p class='mb-0 mt-3'>
-                      <small class='text-dark mr-2'>You don't have an account?</small>
-                      <a href='register.php' class='text-dark font-weight-bold'>Register</a>
-                    </p>
-                  </div>
                 </div>
               </form>
+              <div class='col-lg-12 mb-0'>
+                <button class='btn btn-primary rounded w-100' onclick="login()">Login</button>
+              </div>
+              <br /><br />
+              <div class='col-12 text-center'>
+                <p class='mb-0 mt-3'>
+                  <small class='text-dark mr-2'>You don't have an account?</small>
+                  <a href='/register' class='text-dark font-weight-bold'>Register</a>
+                </p>
+              </div>
             </div>
             <!---->
           </div>
@@ -76,3 +75,45 @@
 <a href='#' class='back-to-top rounded text-center' id='back-to-top'>
   <i class='mdi mdi-chevron-up d-block'> </i>
 </a>
+<script type="text/javascript">
+  async function login() {
+    var login_data = $('#login_form').serializeArray().reduce(function (obj, item) {
+      obj[item.name] = item.value.trim();
+      return obj;
+    }, {});
+
+    if (login_data.username === "" || login_data.password === "") {
+      return Swal.fire({
+        title: 'Error!',
+        text: 'Input validation failed. Please check and try again!',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    };
+
+    try {
+      const response = await axios.post('/', login_data);
+
+      return Swal.fire({
+        title: 'Success!',
+        text: response.data.message,
+        icon: 'success',
+        confirmButtonText: 'OK'
+      }).then((result) => {
+        console.log(result)
+        if (result.isConfirmed) {
+          localStorage.setItem("token", result.token)
+          window.location = '/dashboard';
+        }
+      });
+    } catch (error) {
+      console.log(error);
+      return Swal.fire({
+        title: 'Error!',
+        text: error.toString().endsWith('401') ? 'Invalid Credentials' : error,
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }
+  }
+</script>
