@@ -83,7 +83,7 @@ const registration = asyncHandler(async (req, res) => {
     let token = generateUserToken(user);
 
     // If we have gotten this far, return success
-    emailService.emailRegistrationNotification(user, req.ip);
+    // emailService.emailRegistrationNotification(user, req.ip);
 
     res.header("auth-token", token).status(StatusCodes.CREATED).json({ message: "User registered successfully", result: user, token });
   } catch (err) {
