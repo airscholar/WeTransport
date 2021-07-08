@@ -3,7 +3,9 @@ const customerModel = require("../database/models/customer.model");
 // middleware to validate token
 const verifyToken = async (req, res, next) => {
   let token = req.cookies.token;
-  if (!token) return res.status(403).json({ error: "Access to this page is denied" });
+  if (!token)
+    //return res.status(403).json({ error: "Access to this page is denied" });
+    return res.redirect("/");
   try {
     const verified = jwt.verify(token, process.env.JWT_TOKEN_SECRET);
     req.user = await customerModel.findById(verified.id);

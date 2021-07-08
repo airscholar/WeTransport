@@ -43,18 +43,8 @@
 </div>
 
 <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
-
-
 <script>
-    var pusher = new Pusher('f6bfc91466e34cd2278b', {
-        cluster: 'mt1'
-    });
 
-
-    var channel = pusher.subscribe('mapschannel');
-    channel.bind('googlemap', function (data) {
-        alert('Received my-event with message: ' + data.message);
-    });
 
     function initMap() {
         const image = "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png";
@@ -66,14 +56,18 @@
             zoom: 13,
             center: { lat: 40.771, lng: -73.974 },
         });
-        const myLatLng = { lat: '3.3792', lng: '6.5244' };
+        const myLatLng = { lat: 40.771, lng: -73.974 }
 
-        new google.maps.Marker({
-            position: myLatLng,
-            map,
-            title: "Driver Location",
-            icon: image
-        });
+        setInterval(async () => {
+            const response = await axios.get('/getLocation');
+            console.log(response.data.result.latitude, response.data.result.longitude)
+            new google.maps.Marker({
+                position: { lat: parseInt(response.data.result.latitude), lng: parseInt(response.data.result.longitude) },
+                map,
+                title: "Driver Location",
+                icon: image
+            });
+        }, 5000)
         // Create a renderer for directions and bind it to the map.
         const directionsRenderer = new google.maps.DirectionsRenderer({ map: map });
         // Instantiate an info window to hold step text.
@@ -127,33 +121,10 @@
                 document.getElementById("warnings-panel").innerHTML =
                     "<b>" + result.routes[0].warnings + "</b>";
                 directionsRenderer.setDirections(result);
-                //showSteps(result, markerArray, stepDisplay, map);
             })
             .catch((e) => {
                 window.alert("Directions request failed due to " + e);
             });
-    }
-
-    function showSteps(directionResult, markerArray, stepDisplay, map) {
-        // For each step, place a marker, and add the text to the marker's infowindow.
-        // Also attach the marker to an array so we can keep track of it and remove it
-        // when calculating new routes.
-        const myRoute = directionResult.routes[0].legs[0];
-
-        for (let i = 0; i < myRoute.steps.length; i++) {
-            const marker = (markerArray[i] =
-                markerArray[i] || new google.maps.Marker({
-                    icon: image
-                }));
-            marker.setMap(map);
-            marker.setPosition(myRoute.steps[i].start_location);
-            attachInstructionText(
-                stepDisplay,
-                marker,
-                myRoute.steps[i].instructions,
-                map
-            );
-        }
     }
 
     function attachInstructionText(stepDisplay, marker, text, map) {

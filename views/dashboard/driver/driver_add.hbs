@@ -710,7 +710,7 @@
         };
 
         try {
-            const response = await axios.post('/driverEdit', driver_data);
+            const response = await axios.post('/driverAdd', driver_data);
             console.log(response);
             return Swal.fire({
                 title: 'Success!',

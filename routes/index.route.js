@@ -8,18 +8,20 @@ const verifyToken = require("../middlewares/verifier.middleware");
 
 /* GET login home page. */
 router.route("/").get(securityController.loadLogin).post(securityController.login);
-// router.route("/logout").get(securityController.logout);
+router.route("/logout").get(securityController.logout);
 
 /* GET registration page. */
 router.route("/register").get(securityController.loadRegistration).post(securityController.registration);
 
 /* GET tracking page. */
 router.route("/tracking").get(trackingController.getTracking);
-router.route("/tracker/:tracking_id").get(verifyToken, trackingController.getTracker);
+router.route("/tracker/:tracking_id").get(trackingController.getTracker);
 router.route("/test").get((req, res) => {
   res.json({
     message: "testing",
   });
 });
 
+router.route("/getLocation").get(trackingController.getLocation);
+router.route("/setLocation").put(trackingController.setLocation);
 module.exports = router;

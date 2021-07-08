@@ -32,48 +32,31 @@
 
 </div>
 <script>
+    async function initMap() {
+        setInterval(() => {
+            navigator.geolocation.getCurrentPosition(async position => {
+                const { latitude, longitude } = position.coords;
+                // Show a map centered at latitude / longitude.
+                this.latitude = latitude;
+                this.longitude = longitude;
 
-    // Enable pusher logging - don't include this in production
-    Pusher.logToConsole = true;
+                const response = await axios.put('/setLocation', { latitude, longitude });
 
-    var pusher = new Pusher({
-        appId: "1232755",
-        key: "f6bfc91466e34cd2278b",
-        secret: "d5520973aef5d1492b26",
-        cluster: "mt1",
-        useTLS: true,
-    });
+                const myLatLng = { lat: latitude, lng: longitude };
 
-    pusher.trigger("mapschannel", "googlemap", {
-        message: { coordinates: { longitude: (x += 0.0001), latitude: (y += 0.0001) } },
-    });
-
-    let watchId = "";
-    function initMap() {
-        watchId = navigator.geolocation.watchPosition(position => {
-            const { latitude, longitude } = position.coords;
-            // Show a map centered at latitude / longitude.
-            this.latitude = latitude;
-            this.longitude = longitude;
-            console.log(position.coords);
-            const myLatLng = { lat: latitude, lng: longitude };
-            const map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 14,
-                center: myLatLng,
+                setLocationOnMap(myLatLng);
             });
-            new google.maps.Marker({
-                position: myLatLng,
-                map,
-                title: "Hello World!",
-            });
-        });
-
+        }, 5000);
     }
-
-    async function start_location_service() {
-        pusher.trigger('my-channel', 'my-event', {
-            "message": "hello world"
+    function setLocationOnMap(myLatLng) {
+        const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 14,
+            center: myLatLng,
+        });
+        new google.maps.Marker({
+            position: myLatLng,
+            map,
+            title: "Driver Location",
         });
     }
-
 </script>
