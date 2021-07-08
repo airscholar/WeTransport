@@ -10,6 +10,7 @@ const { asyncHandler } = require("../../middlewares/index.middleware");
 const ErrorResponse = require("../../utilities/errorResponse.helper");
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
+const customerModel = require("../../database/models/customer.model");
 
 const loadLogin = asyncHandler(async (req, res) => {
   if (req.user) {
@@ -200,7 +201,7 @@ module.exports = {
   loadLogin,
   loadRegistration,
   login,
-  // registration,
+  registration,
   // logout,
   // passwordReset,
   // loggedInUser,

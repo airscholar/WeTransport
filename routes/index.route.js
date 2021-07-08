@@ -11,7 +11,7 @@ router.route("/").get(securityController.loadLogin).post(securityController.logi
 // router.route("/logout").get(securityController.logout);
 
 /* GET registration page. */
-router.route("/register").get(securityController.loadRegistration);
+router.route("/register").get(securityController.loadRegistration).post(securityController.registration);
 
 /* GET tracking page. */
 router.route("/tracking").get(trackingController.getTracking);
