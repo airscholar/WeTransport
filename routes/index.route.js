@@ -7,7 +7,8 @@ const { protectRoute, authorize } = require("../middlewares/auth.middleware");
 const verifyToken = require("../middlewares/verifier.middleware");
 
 /* GET login home page. */
-router.route("/").get(verifyToken, securityController.loadLogin).post(securityController.login);
+router.route("/").get(securityController.loadLogin).post(securityController.login);
+// router.route("/logout").get(securityController.logout);
 
 /* GET registration page. */
 router.route("/register").get(securityController.loadRegistration);
