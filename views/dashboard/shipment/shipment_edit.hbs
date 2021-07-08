@@ -1,0 +1,440 @@
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 align-self-center">
+            <h4 class="page-title"><i class="ti-package" aria-hidden="true"></i> Update Shipments</h4>
+        </div>
+    </div>
+</div>
+<hr />
+<form method="post" id="shipment_form" action="shipmentAdd" name="shipment_form">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <div class="input-group mb-6">
+                                    <label for="inputcom" class="control-label col-form-label">Shipment Prefix</label>
+                                    <input type="text" class="form-control" name="shipment_prefix"
+                                        id="code_prefix_input" value="{{shipment.shipment_prefix}}" readonly="">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="input-group mb-6">
+                                    <label for="inputcom" class="control-label col-form-label">Order Number
+                                        (Tracking)</label>
+                                    <input type="text" class="form-control" name="order_number_tracking"
+                                        id="order_number_tracking" value="{{shipment.order_number_tracking}}"
+                                        readonly="">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputlname" class="control-label col-form-label">Agency List </label>
+                                <div class="input-group mb-3">
+                                    <select class="custom-select col-12" id="agency_name" name="agency_name" required=""
+                                        value="{{shipment.agency_name}}">
+                                        <option value="">--Select Agency--</option>
+                                        <option value="AGENCY 1">AGENCY 1</option>
+                                        <option value="AGENCY 2">AGENCY 2</option>
+                                        <option value="AGENCY 3">AGENCY 3</option>
+                                        <option value="ALL AGENCIES">ALL AGENCIES</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!--  -->
+                            <div class="form-group col-md-6">
+                                <label for="inputname" class="control-label col-form-label">Origin Office</label>
+                                <div class="input-group mb-3">
+                                    <select class="custom-select col-12" name="origin_office" id="origin_office"
+                                        value="{{shipment.origin_office}}" required="">
+                                        <option value="">--Select Office--</option>
+                                        <option value="OFFICE 1">OFFICE 1</option>
+                                        <option value="OFFICE 2">OFFICE 2</option>
+                                        <option value="OFFICE 3">OFFICE 3</option>
+                                        <option value="OFFICE 4">OFFICE 4</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Row -->
+        <!-- Row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title"><i class="mdi mdi-information-outline" style="color:#36bea6"></i>
+                            Receiver information</h4>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label col-form-label">Sender Id</label>
+                                <input class="form-control" name="sender_id" id="sender_id" readonly=""
+                                    value="{{shipment.sender_id}}">
+                            </div>
+                            <div class="col-md-12">
+                                <label class="control-label col-form-label">Sender Name</label>
+                                <input class="form-control" name="sender_name" id="sender_name"
+                                    value="{{shipment.sender_name}}">
+                            </div>
+                            <div class="col-md-12">
+                                <label for="inputcontact" class="control-label col-form-label">Sender Address</label>
+                                <input class="form-control" name="sender_address" id="sender_address"
+                                    value="{{shipment.sender_address}}">
+                            </div>
+                            <div class="col-md-12">
+                                <label class="control-label col-form-label">Receiver Name</label>
+                                <input class="form-control" name="receiver_name" id="receiver_name"
+                                    value="{{shipment.receiver_name}}">
+                            </div>
+                            <div class="col-md-12">
+                                <label for="inputcontact" class="control-label col-form-label">Receiver Address</label>
+                                <input class="form-control" name="receiver_address" id="receiver_address"
+                                    value="{{shipment.receiver_address}}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title"><i class="mdi mdi-book-multiple" style="color:#36bea6"></i> Shipment
+                            Info:</h4>
+                        <br>
+                        <div class="row">
+
+                            <div class="form-group col-md-4">
+                                <label for="inputlname" class="control-label col-form-label">Packaging Type</label>
+                                <div class="input-group mb-3">
+                                    <select class="custom-select col-12" id="package_type" name="package_type"
+                                        value="{{shipment.package_type}}" required="">
+                                        <option value="">--Select Package--</option>
+                                        <option value="Chipboard packaging">Chipboard packaging</option>
+                                        <option value="Container">Container</option>
+                                        <option value="Corrugated boxes">Corrugated boxes</option>
+                                        <option value="Foil sealed bags">Foil sealed bags</option>
+                                        <option value="Pallets">Pallets</option>
+                                        <option value="Paperboard boxes">Paperboard boxes</option>
+                                        <option value="Plastic boxes">Plastic boxes</option>
+                                        <option value="Poly bags">Poly bags</option>
+                                        <option value="Rigid boxes">Rigid boxes</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="inputcontact" class="control-label col-form-label">Courier
+                                    Company</label>
+                                <div class="input-group mb-3">
+                                    <select class="custom-select col-12" id="courier_company" name="courier_company"
+                                        required="" value="{{shipment.courier_company}}">
+                                        <option value="">--Select messaging--</option>
+                                        <option value="China Post / international mail">China Post / international mail
+                                        </option>
+                                        <option value="DHL/Airborne">DHL/Airborne</option>
+                                        <option value="FedEx">FedEx</option>
+                                        <option value="FedEx Freight">FedEx Freight</option>
+                                        <option value="LaserShip">LaserShip</option>
+                                        <option value="ROYAL MAIL">ROYAL MAIL</option>
+                                        <option value="TNT">TNT</option>
+                                        <option value="UPS">UPS</option>
+                                        <option value="UPS Mail Innovations">UPS Mail Innovations</option>
+                                        <option value="USPS / international mail">USPS / international mail</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="inputEmail3" class="control-label col-form-label">Shipping Mode</label>
+                                <div class="input-group mb-3">
+                                    <select class="custom-select col-12" id="shipping_mode" name="shipping_mode"
+                                        required="" value="{{shipment.shipping_mode}}">
+                                        <option value="">--Select shipping mode--</option>
+                                        <option value="Priority Mail Express">Priority Mail Express</option>
+                                        <option value="Priority Mail">Priority Mail</option>
+                                        <option value="Priority MailFirst-Class Mail">Priority MailFirst-Class Mail
+                                        </option>
+                                        <option value="International Economy">International Economy</option>
+                                        <option value="International Priority">International Priority</option>
+                                        <option value="Express Domestic">Express Domestic</option>
+                                        <option value="Sea">Sea</option>
+                                        <option value="Air">Air</option>
+                                        <option value="Bus 1211">Bus 1211</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="inputcontact" class="control-label col-form-label">Estimated deliver
+                                    date</label>
+                                <div class="input-group">
+                                    <div class="input-group-append" data-target="#datetimepicker1"
+                                        data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i style="color:#ff0000"
+                                                class="fa fa-calendar"></i>
+                                        </div>
+                                    </div>
+                                    <input type="text" class="form-control" name="order_date" id="order_date"
+                                        placeholder="--Shipping collection date--" data-toggle="tooltip"
+                                        data-placement="bottom" title="" value="{{shipment.order_date}}"
+                                        data-original-title="Add Ship Date">
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="form-group col-md-4">
+                                <label for="inputEmail3" class="control-label col-form-label">Delivery Time</label>
+                                <div class="input-group mb-3">
+                                    <select class="custom-select col-12" id="delivery_time" name="delivery_time"
+                                        required="" value="{{shipment.delivery_time}}">
+                                        <option value="">--Select delivery time--</option>
+                                        <option value="Express">Express Mode</option>
+                                        <option value="1 - 2 Days">1 - 2 Days</option>
+                                        <option value="1 - 3 Days">1 - 3 Days</option>
+                                        <option value="1 - 4 Days">1 - 4 Days</option>
+                                        <option value="1 - 5 Days">1 - 5 Days</option>
+                                        <option value="1 - 6 Days">1 - 6 Days</option>
+                                        <option value="1 - 7 Days">1 - 7 Days</option>
+                                        <option value="1 Week">1 Week</option>
+                                        <option value="2 Weeks">2 Week</option>
+                                        <option value="3 Weeks">3 Week</option>
+                                        <option value="1 Month">1 Month</option>
+                                        <option value="2 Months">2 Month</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="form-group col-md-4">
+                                <label for="inputname" class="control-label col-form-label">Assign Driver</label>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" style="color:#ff0000"><i
+                                                class="fas fa-car"></i></span>
+                                    </div>
+                                    <select class="custom-select col-12" id="assigned_driver" name="assigned_driver"
+                                        required="" value="{{shipment.assigned_driver}}">
+                                        <option value="0">--Select driver or dealer--</option>
+                                        {{#each drivers}}
+                                        <option value="{{first_name}} {{last_name}}">{{first_name}} {{last_name}}
+                                        </option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <HR> -->
+                        <div class="row">
+                            <div class="form-group col-md-4">
+                                <label for="inputEmail3" class="control-label col-form-label">Payment Method <i
+                                        style="color:#ff0000" class="fas fa-donate"></i></label>
+                                <div class="input-group mb-3">
+                                    <select class="custom-select col-12" id="payment_method" name="payment_method"
+                                        required="" value="{{shipment.payment_method}}">
+                                        <option value="">--Select payment mode--</option>
+                                        <option value="Cash">Cash</option>
+                                        <option value="Credit Card">Credit Card</option>
+                                        <option value="Bank Transfer">Bank Transfer</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="inputcontact" class="control-label col-form-label">Delivery Status <i
+                                        style="color:#ff0000" class="fas fa-shipping-fast"></i></label>
+                                <div class="input-group mb-3">
+                                    <select class="custom-select col-12" id="delivery_status" name="delivery_status"
+                                        required="" value="{{shipment.delivery_status}}">
+                                        <option value="">--Select shipping status--</option>
+                                        <option value="ADDED TO FLIGHT">ADDED TO FLIGHT</option>
+                                        <option value="ADDED TO TRIP">ADDED TO TRIP</option>
+                                        <option value="Approved">Approved</option>
+                                        <option value="Available">Available</option>
+                                        <option value="Cancelled">Cancelled</option>
+                                        <option value="CLERANCE RECEIVED">CLERANCE RECEIVED</option>
+                                        <option value="CUSTOMER COMPLAINT RECEIVED">CUSTOMER COMPLAINT RECEIVED</option>
+                                        <option value="Distribution">Distribution</option>
+                                        <option value="HOLD BY CUSTOMS">HOLD BY CUSTOMS</option>
+                                        <option value="In Transit">In Transit</option>
+                                        <option value="In Warehouse">In Warehouse</option>
+                                        <option value="Invoiced">Invoiced</option>
+                                        <option value="On Route">On Route</option>
+                                        <option value="PENDING CLERANCE">PENDING CLERANCE</option>
+                                        <option value="Pending Collection">Pending Collection</option>
+                                        <option value="Pending payment">Pending payment</option>
+                                        <option value="Pending quote">Pending quote</option>
+                                        <option value="Quotation">Quotation</option>
+                                        <option value="RECEIVED AT AIRPORT">RECEIVED AT AIRPORT</option>
+                                        <option value="RECEIVED AT DESTINATION CITY">RECEIVED AT DESTINATION CITY
+                                        </option>
+                                        <option value="Received Office">Received Office</option>
+                                        <option value="SCANNED">SCANNED</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="form-group">
+    <div class="col-sm-12">
+        <button class="btn btn-outline-primary btn-confirmation" id="add_driver"
+            onclick="updateShipment('{{shipment._id}}')">Update Shipment<span><i class="icon-ok"></i></span></button>
+        <a href="/shipmentList" class="btn btn-outline-secondary btn-confirmation"><span><i
+                    class="ti-share-alt"></i></span>Shipment List</a>
+    </div>
+</div>
+<script>
+    async function updateShipment(customer_id) {
+        var shipment_data = $('#shipment_form').serializeArray().reduce(function (obj, item) {
+            console.log(obj[item.name])
+            obj[item.name] = item.value.trim();
+            return obj;
+        }, {});
+
+        try {
+            const response = await axios.put('/shipmentEdit/' + customer_id, shipment_data);
+            console.log(response);
+            return Swal.fire({
+                title: 'Success!',
+                text: response.data.message,
+                icon: 'success',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location = '/shipmentList';
+                }
+            });
+        } catch (error) {
+            console.log(error);
+            return Swal.fire({
+                title: 'Error!',
+                text: error.message,
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
+    }
+
+
+    function selectElement(id, valueToSelect) {
+        let element = document.getElementById(id);
+        element.value = valueToSelect;
+    }
+    $(document).ready(function () {
+        $('#order_date').datepicker({
+            format: "yyyy-mm-dd",
+            autoclose: true
+        });
+
+        $('#agency_name').val('{{shipment.agency_name}}');
+        $('#sender_name').val('{{shipment.sender_name}}');
+        $('#origin_office').val('{{shipment.origin_office}}');
+        $('#package_type').val('{{shipment.package_type}}');
+        $('#courier_company').val('{{shipment.courier_company}}');
+        $('#shipping_mode').val('{{shipment.shipping_mode}}');
+        $('#delivery_time').val('{{shipment.delivery_time}}');
+        $('#assigned_driver').val('{{shipment.assigned_driver}}');
+        $('#payment_method').val('{{shipment.payment_method}}');
+        $('#delivery_status').val('{{shipment.delivery_status}}');
+
+        $('#register_customer_to_user').click(function () {
+            if ($(this).is(':checked')) {
+                $('#show_hide_user_inputs').removeClass('d-none');
+            } else {
+                $('#show_hide_user_inputs').addClass('d-none');
+            }
+        });
+        $('#code_prefix_select').hide();
+        $('#prefix_check').on('change', function (event) {
+            // alert(1)
+            if ($('#prefix_check').is(":checked")) {
+                $('#code_prefix_input').hide();
+                $('#code_prefix_input').attr("disabled", true);
+                $('#prefix_check').val(1);
+                $('#code_prefix_select').show();
+                $('#code_prefix_select').attr("disabled", false);
+                $("#code_prefix_select").attr("required", "true");
+            }
+            else {
+                $('#prefix_check').val(0);
+                $('#code_prefix_select').hide();
+                $('#code_prefix_select').attr("disabled", true);
+                $('#code_prefix_input').show();
+                $('#code_prefix_input').attr("disabled", false);
+                $("#code_prefix_select").attr("required", "false");
+            }
+        });
+
+        $('#updateShipment').click(function () {
+            if (validateZiseFiles() == true) {
+                return false;
+            }
+            if ($.trim($('#recipient_id').val()).length == 0) {
+                alert("Please select recipient customer");
+                return false;
+            }
+            if ($.trim($('#recipient_address_id').val()).length == 0) {
+                alert("Please select recipient customer address");
+                return false;
+            }
+            if ($.trim($('#sender_id').val()).length == 0) {
+                alert("Please select sender customer");
+                return false;
+            }
+            if ($.trim($('#sender_address_id').val()).length == 0) {
+                alert("Please select sender customer address");
+                return false;
+            }
+            if ($.trim($('#order_no').val()).length == 0) {
+                alert("Please Select shipment number");
+                return false;
+            }
+            if ($.trim($('#agency').val()) == 0) {
+                alert("Please Select Agency");
+                return false;
+            }
+            if ($.trim($('#origin_off').val()) == 0) {
+                alert("Please Select office");
+                return false;
+            }
+            if ($.trim($('#package_type').val()) == 0) {
+                alert("Please Select package name");
+                return false;
+            }
+            if ($.trim($('#order_courier').val()) == 0) {
+                alert("Please Select courier company");
+                return false;
+            }
+            if ($.trim($('#order_service_options').val()) == 0) {
+                alert("Please Select services options");
+                return false;
+            }
+            if ($.trim($('#delivery_time').val()) == 0) {
+                alert("Please Select time delivery");
+                return false;
+            }
+            if ($.trim($('#payment_method').val()) == 0) {
+                alert("Please Enter method payment");
+                return false;
+            }
+            if ($.trim($('#delivery_status').val()) == 0) {
+                alert("Please Enter status courier");
+                return false;
+            }
+            if ($.trim($('#driver_id').val()) == 0) {
+                alert("Please Enter driver name");
+                return false;
+            }
+            $('#invoice_form').submit();
+        });
+    });
+</script>

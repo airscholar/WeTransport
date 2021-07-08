@@ -13,6 +13,7 @@
   "dependencies": {
     "@sendgrid/mail": "^7.4.4",
     "app-root-path": "^3.0.0",
+    "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "chalk": "^4.1.1",
     "colors": "^1.4.0",
@@ -35,8 +36,11 @@
     "moment": "^2.29.1",
     "mongoose": "^5.12.13",
     "morgan": "^1.10.0",
+    "net": "^1.0.2",
+    "pusher": "^5.0.0",
     "rotating-file-stream": "^2.1.5",
     "trim-newlines": "^4.0.1",
+    "websocket": "^1.0.34",
     "winston": "^3.3.3",
     "winston-daily-rotate-file": "^4.5.5",
     "winston-mongodb": "^5.0.7"

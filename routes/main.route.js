@@ -27,6 +27,7 @@ router.route("/shipmentList").get(verifyToken, shipmentController.loadShipmentLi
 router.route("/shipmentAdd/:customer_id").get(verifyToken, shipmentController.loadShipmentAdd).post(shipmentController.addShipment);
 router.route("/shipmentEdit/:shipment_id").get(verifyToken, shipmentController.loadShipmentEdit).put(verifyToken, shipmentController.updateShipment);
 router.route("/shipmentDelete/:shipment_id").delete(shipmentController.deleteShipment);
+router.route("/shipmentCheck").post(shipmentController.checkShipment);
 
 //driver
 router.route("/driverList").get(verifyToken, driverController.loadDriverList);
@@ -34,5 +35,6 @@ router.route("/driverAdd").get(verifyToken, driverController.loadDriverAdd).post
 router.route("/driverEdit").get(verifyToken, driverController.loadDriverEdit).put(verifyToken, driverController.driverUpdate);
 router.route("/driverEdit/:driver_id").get(verifyToken, driverController.loadDriverEdit).put(verifyToken, driverController.driverUpdate);
 router.route("/driverDelete/:driver_id").delete(verifyToken, driverController.deleteDriver);
+router.route("/driverEnroute/:tracking_id").get(driverController.loadDriverEnroute);
 
 module.exports = router;

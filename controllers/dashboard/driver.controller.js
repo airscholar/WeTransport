@@ -1,9 +1,11 @@
 const DriverModel = require("../../database/models/driver.model");
+const shipmentModel = require("../../database/models/shipment.model");
 const ErrorResponse = require("../../utilities/errorResponse.helper");
 const { StatusCodes } = require("http-status-codes");
 const { validationResult } = require("express-validator");
 const { asyncHandler } = require("../../middlewares/asyncHandler.middleware");
 const moment = require("moment");
+const driverModel = require("../../database/models/driver.model");
 
 /////////DRIVERS
 const loadDriverList = asyncHandler(async (req, res) => {
@@ -84,6 +86,23 @@ const addDriver = asyncHandler(async (req, res) => {
   });
 });
 
+const loadDriverEnroute = asyncHandler(async (req, res) => {
+  const { tracking_id } = req.params;
+  const shipment = await shipmentModel.findOne({ order_number_tracking: tracking_id.substr(3, tracking_id.length - 1) });
+
+  const driver = await driverModel.findOne({ first_name: shipment.assigned_driver.split(" ")[0], last_name: shipment.assigned_driver.split(" ")[1] });
+  if (!shipment) return res.status(StatusCodes.NOT_FOUND).json({ message: "shipment Not Found" });
+
+  res.render("dashboard/driver/driver_enroute", {
+    layout: "layouts/layout_tracker",
+    title: "Drivers | We Transport",
+    date: moment().format("LLLL"),
+    driver: driver,
+    user: req.user,
+    shipment,
+  });
+});
+
 module.exports = {
   loadDriverList,
   loadDriverEdit,
@@ -91,4 +110,5 @@ module.exports = {
   loadDriverAdd,
   addDriver,
   deleteDriver,
+  loadDriverEnroute,
 };

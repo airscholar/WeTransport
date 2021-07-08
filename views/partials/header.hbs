@@ -7,7 +7,7 @@
             <!-- ============================================================== -->
             <!-- Logo -->
             <!-- ============================================================== -->
-            <a class="navbar-brand" href="index.php">
+            <a class="navbar-brand" href="/">
                 <!-- Logo text -->
                 <span class="logo-text">
                     <!-- dark Logo text -->
@@ -56,30 +56,22 @@
                 <!-- ============================================================== -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="#"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
-                            src="../thumbmaker.php?src=http://localhost/WeTransport//uploads/blank.png&amp;w=200&amp;h=200&amp;s=1&amp;a=t1"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="/uploads/blank.png"
                             class="rounded-circle" width="51" />&nbsp;
                         <i class="fa fa-caret-down"></i></a>
                     <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
                         <span class="with-arrow"><span class="bg-primary"></span></span>
                         <div class="d-flex no-block align-items-center p-15 bg-primary text-white m-b-10">
-                            <div class=""><img
-                                    src="../thumbmaker.php?src=http://localhost/WeTransport//uploads/blank.png&amp;w=200&amp;h=200&amp;s=1&amp;a=t1"
-                                    width="80" />
+                            <div class=""><img src="/uploads/blank.png" width="80" />
                             </div>
                             <div class="m-l-10">
-                                <h4 class="m-b-0">admin</h4>
-                                <p class="m-b-0">admin@wetransport.com</p>
+                                <h4 class="m-b-0">{{user.first_name}} {{ user.last_name}}</h4>
+                                <p class="m-b-0">{{user.email}}</p>
                             </div>
                         </div>
-                        <a class="dropdown-item" href="all_tools.php?do=main&amp;action=edit&amp;id=1"><i
-                                class="ti-user m-r-5 m-l-5"></i> My Profile</a>
-
+                        <a class="dropdown-item" href="/profile"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="all_tools.php?do=main"><i class="ti-settings m-r-5 m-l-5"></i>
-                            Account Setting</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="../logout.php"><i class="fa fa-power-off m-r-5 m-l-5"></i>
+                        <a class="dropdown-item" href="/logout"><i class="fa fa-power-off m-r-5 m-l-5"></i>
                             Logout</a>
                     </div>
                 </li>

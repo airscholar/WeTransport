@@ -1,0 +1,79 @@
+<style>
+    #map {
+        height: 100%;
+    }
+</style>
+<div class="container-fluid">
+    <h3>
+        Shipment Information
+    </h3>
+    <div class="row justify-content-center col-md-12" style="height: 800px;">
+
+        <div class="card col-md-2">
+            <div class="card-body">
+                <div class="form-group col-md-12">
+                    <label class="input-label">
+                        <center>Customer Destination</center>
+                    </label>
+                    {{shipment.receiver_address}}
+                </div>
+                <div>
+                    <button type="button" class="btn btn-success" id="btStart" onclick="">Start</button>
+                    <button type="button" class="btn btn-danger" id="btStop" onclick="">Stop</button>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-10">
+            <div id="map" style="height: 100%;"></div>
+        </div>
+    </div>
+</div>
+
+</div>
+<script>
+
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher({
+        appId: "1232755",
+        key: "f6bfc91466e34cd2278b",
+        secret: "d5520973aef5d1492b26",
+        cluster: "mt1",
+        useTLS: true,
+    });
+
+    pusher.trigger("mapschannel", "googlemap", {
+        message: { coordinates: { longitude: (x += 0.0001), latitude: (y += 0.0001) } },
+    });
+
+    let watchId = "";
+    function initMap() {
+        watchId = navigator.geolocation.watchPosition(position => {
+            const { latitude, longitude } = position.coords;
+            // Show a map centered at latitude / longitude.
+            this.latitude = latitude;
+            this.longitude = longitude;
+            console.log(position.coords);
+            const myLatLng = { lat: latitude, lng: longitude };
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 14,
+                center: myLatLng,
+            });
+            new google.maps.Marker({
+                position: myLatLng,
+                map,
+                title: "Hello World!",
+            });
+        });
+
+    }
+
+    async function start_location_service() {
+        pusher.trigger('my-channel', 'my-event', {
+            "message": "hello world"
+        });
+    }
+
+</script>

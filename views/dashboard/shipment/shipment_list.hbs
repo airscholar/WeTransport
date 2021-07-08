@@ -16,6 +16,16 @@
         <div class="col-12 col-sm-12 col-md-12">
             <div class="card">
                 <div class="card-body">
+                    {{#if dashboard}}
+                    <div class="page-breadcrumb">
+                        <div class="row">
+                            <div class="col-12 align-self-center">
+                                <h4 class="page-title"><i class="ti-package" aria-hidden="true"></i> Shipments History
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                    {{else}}
                     <div class="m-t-40">
                         <div class="d-flex">
                             <div class="mr-auto">
@@ -26,19 +36,23 @@
                             </div>
                         </div>
                     </div>
+                    {{/if}}
 
                     <div class="outer_div">
                         <table id="zero_config" class="table table-striped">
                             <thead>
                                 <tr>
                                     <th><b>Tracking</b></th>
-                                    <th><b>Receivier</b></th>
+                                    <th><b>Receiver</b></th>
                                     <th><b>Shipping Mode</b></th>
                                     <th><b>Payment Method</b></th>
                                     <th><b>Delivery Date</b></th>
                                     <th align='center'><b>Count</b></th>
                                     <th><b>Status</b></th>
+                                    {{#if dashboard}}
+                                    {{else}}
                                     <th data-hide="all" align='center'><b>Action</b></th>
+                                    {{/if}}
                                 </tr>
                             </thead>
                             <tbody id="projects-tbl">
@@ -52,6 +66,8 @@
                                     <td>{{courier_company}}</td>
                                     <td><span style="background: grey;"
                                             class="label label-large">{{delivery_status}}</span></td>
+                                    {{#if ../dashboard}}
+                                    {{else}}
                                     <td>
                                         <a href="/shipmentEdit/{{_id}}" data-toggle="tooltip" data-placement="top"
                                             title="Edit"><i style="color:#343a40" class="ti-pencil"></i></a>
@@ -59,6 +75,7 @@
                                             class="delete" data-toggle="tooltip" data-placement="top" title="Delete"><i
                                                 style="color:#343a40" class="ti-trash"></i></a>
                                     </td>
+                                    {{/if}}
                                 </tr>
                                 {{else}}
                                 <tr>

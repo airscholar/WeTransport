@@ -14,7 +14,7 @@ router.route("/register").get(securityController.loadRegistration);
 
 /* GET tracking page. */
 router.route("/tracking").get(trackingController.getTracking);
-router.route("/tracker").get(protectRoute, authorize("User"), trackingController.getTracker);
+router.route("/tracker/:tracking_id").get(verifyToken, trackingController.getTracker);
 router.route("/test").get((req, res) => {
   res.json({
     message: "testing",
