@@ -78,7 +78,7 @@
             console.log(response.data.result.latitude, response.data.result.longitude)
 
             marker.setMap(map);
-        }, 5000)
+        }, 10000)
         // Create a renderer for directions and bind it to the map.
         const directionsRenderer = new google.maps.DirectionsRenderer({ map: map });
         // Instantiate an info window to hold step text.

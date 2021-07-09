@@ -33,20 +33,16 @@
 </div>
 <script>
     async function initMap() {
-        setInterval(() => {
-            navigator.geolocation.getCurrentPosition(async position => {
-                const { latitude, longitude } = position.coords;
-                // Show a map centered at latitude / longitude.
-                this.latitude = latitude;
-                this.longitude = longitude;
+        setInterval(async () => {
+            const response = await axios.post('https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyB7tHIkJIxsXWMmTDPpbce2VwDSvtqFINU', {});
 
-                const response = await axios.put('/setLocation', { latitude, longitude });
+            const { lat, lng } = response.data.location;
+            // Show a map centered at latitude / longitude.
+            await axios.put('/setLocation', { latitude: lat, longitude: lng });
 
-                const myLatLng = { lat: latitude, lng: longitude };
-
-                setLocationOnMap(myLatLng);
-            });
-        }, 5000);
+            setLocationOnMap({ lat, lng });
+            //});
+        }, 10000);
     }
     function setLocationOnMap(myLatLng) {
         const map = new google.maps.Map(document.getElementById("map"), {
