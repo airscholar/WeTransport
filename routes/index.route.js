@@ -15,7 +15,9 @@ router.route("/register").get(securityController.loadRegistration).post(security
 
 /* GET tracking page. */
 router.route("/tracking").get(trackingController.getTracking);
+router.route("/driverTracking").get(trackingController.getDriverTracking);
 router.route("/tracker/:tracking_id").get(trackingController.getTracker);
+
 router.route("/test").get((req, res) => {
   res.json({
     message: "testing",

@@ -3,8 +3,13 @@ const moment = require("moment");
 const shipmentModel = require("../../database/models/shipment.model");
 const locationModel = require("../../database/models/location.model");
 const { StatusCodes } = require("http-status-codes");
+
 const getTracking = asyncHandler(async function (req, res) {
   res.render("tracking", { layout: "layouts/layout_login.hbs", header_type: "login", date: moment().format("LLLL"), user: req.user });
+});
+
+const getDriverTracking = asyncHandler(async function (req, res) {
+  res.render("driver_tracking", { layout: "layouts/layout_login.hbs", header_type: "login", date: moment().format("LLLL"), user: req.user });
 });
 
 const getTracker = asyncHandler(async function (req, res) {
@@ -47,6 +52,7 @@ const setLocation = asyncHandler(async (req, res) => {
 
 module.exports = {
   getTracking,
+  getDriverTracking,
   getTracker,
   getLocation,
   setLocation,
