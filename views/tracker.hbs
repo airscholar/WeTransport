@@ -60,6 +60,11 @@
 
         setInterval(async () => {
             const response = await axios.get('/getLocation');
+            var marker = new google.maps.Marker({
+                position: map.getCenter(),
+                title: "Driver Location",
+                icon: svgMarker
+            });
             marker.setMap(null);
             console.log(response.data.result.latitude, response.data.result.longitude)
             const svgMarker = {
@@ -71,11 +76,7 @@
                 scale: 2,
                 anchor: new google.maps.Point(15, 30),
             };
-            var marker = new google.maps.Marker({
-                position: map.getCenter(),
-                title: "Driver Location",
-                icon: svgMarker
-            });
+
             marker.setMap(map);
         }, 5000)
         // Create a renderer for directions and bind it to the map.
