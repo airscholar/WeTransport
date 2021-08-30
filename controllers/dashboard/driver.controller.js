@@ -89,7 +89,10 @@ const addDriver = asyncHandler(async (req, res) => {
 const loadDriverEnroute = asyncHandler(async (req, res) => {
   const { tracking_id } = req.params;
   const shipment = await shipmentModel.findOne({ order_number_tracking: tracking_id.substr(3, tracking_id.length - 1) });
-
+  const _driver = await DriverModel.findOne({});
+  if (!shipment.assigned_driver) {
+    shipment.assigned_driver = _driver;
+  }
   const driver = await driverModel.findOne({ first_name: shipment.assigned_driver.split(" ")[0], last_name: shipment.assigned_driver.split(" ")[1] });
   if (!shipment) return res.status(StatusCodes.NOT_FOUND).json({ message: "shipment Not Found" });
 

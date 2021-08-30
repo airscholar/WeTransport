@@ -13,6 +13,9 @@ const fileUpload = require("express-fileupload");
 const hbs = require("hbs");
 const methodOverride = require("method-override");
 var session = require("express-session");
+const http = require("http");
+const socketIo = require("socket.io");
+var server;
 
 // 📊 Logging
 require("./startup/logging")(winston);
@@ -128,7 +131,27 @@ try {
 
   app.use(middleware.errorHandler);
   // Boot app
-  app.listen(config.sitePort(), () => {
+
+  server = http.createServer(app);
+
+  const locationMap = new Map();
+  const io = socketIo(server);
+
+  io.on("connection", socket => {
+    socket.on("updateLocation", pos => {
+      locationMap.set(socket.id, pos);
+    });
+
+    socket.on("requestLocations", () => {
+      socket.emit("locationsUpdate", Array.from(locationMap));
+    });
+
+    socket.on("disconnect", () => {
+      locationMap.delete(socket.id);
+    });
+  });
+
+  server.listen(config.sitePort(), () => {
     console.log(chalk.blue.bold(" ---------------------------------------------------------"));
     console.log(chalk.blue.bold("| ") + chalk.bold("BOOTING"));
     console.log(chalk.blue.bold("|---------------------------------------------------------"));

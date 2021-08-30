@@ -1,8 +1,48 @@
 <style>
-    #map {
-        height: 100%;
+    html,
+    body {
+        font-family: "Roboto", "Helvetica", sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        overflow: hidden;
+    }
+
+    .map {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: -10;
+        hidden: true;
+    }
+
+    /*
+ * Top bar
+ */
+
+    .top-bar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 64px;
+        background-color: #445a65;
+        z-index: 20;
+    }
+
+    .top-bar .tracker {
+        position: absolute;
+        top: 24px;
+        left: 36px;
+        font-size: 18px;
+        color: rgba(255, 255, 255, 0.97);
     }
 </style>
+
 <div class="container-fluid">
     <h3>
         Shipment Information
@@ -25,34 +65,97 @@
             </div>
         </div>
         <div class="col-md-10">
-            <div id="map" style="height: 100%;"></div>
+            <div id="map" style="height: 0%;"></div>
         </div>
     </div>
 </div>
-
 </div>
 <script>
-    async function initMap() {
-        setInterval(async () => {
-            const response = await axios.post('https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyB7tHIkJIxsXWMmTDPpbce2VwDSvtqFINU', {});
+    document.addEventListener('DOMContentLoaded', () => {
+        const socket = io('/')
 
-            const { lat, lng } = response.data.location;
-            // Show a map centered at latitude / longitude.
-            await axios.put('/setLocation', { latitude: lat, longitude: lng });
+        const positionOptions = {
+            enableHighAccuracy: true,
+            maximumAge: 0
+        }
 
-            setLocationOnMap({ lat, lng });
-            //});
-        }, 10000);
-    }
-    function setLocationOnMap(myLatLng) {
-        const map = new google.maps.Map(document.getElementById("map"), {
-            zoom: 14,
-            center: myLatLng,
-        });
-        new google.maps.Marker({
-            position: myLatLng,
-            map,
-            title: "Driver Location",
-        });
+        setInterval(() => {
+            navigator.geolocation.getCurrentPosition(pos => {
+                const { latitude: lat, longitude: lng } = pos.coords
+                socket.emit('updateLocation', { lat, lng })
+            }, err => {
+                console.error(err)
+            }, positionOptions)
+        }, 2000)
+    });
+    function initMap() {
+        const markerArray = [];
+        // Instantiate a directions service.
+        const directionsService = new google.maps.DirectionsService();
+        navigator.geolocation.getCurrentPosition(pos => {
+            const { latitude: lat, longitude: lng } = pos.coords
+
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat, lng },
+                zoom: 15
+            })
+            new google.maps.Marker({
+                position: { lat, lng },
+                map,
+                title: "Driver Location",
+            });
+            const directionsRenderer = new google.maps.DirectionsRenderer({ map: map });
+            // Instantiate an info window to hold step text.
+            const stepDisplay = new google.maps.InfoWindow();
+            // Display the route between the initial start and end selections.
+            calculateAndDisplayRoute(
+                directionsRenderer,
+                directionsService,
+                markerArray,
+                stepDisplay,
+                map
+            );
+            const onChangeHandler = function () {
+                calculateAndDisplayRoute(
+                    directionsRenderer,
+                    directionsService,
+                    markerArray,
+                    stepDisplay,
+                    map
+                );
+            };
+            function calculateAndDisplayRoute(
+                directionsRenderer,
+                directionsService,
+                markerArray,
+                stepDisplay,
+                map
+            ) {
+                // First, remove any existing markers from the map.
+                for (let i = 0; i < markerArray.length; i++) {
+                    markerArray[i].setMap(null);
+                }
+                // Retrieve the start and end locations and create a DirectionsRequest using
+                // WALKING directions.
+                directionsService
+                    .route({
+                        origin: document.getElementById("start").value,
+                        destination: document.getElementById("end").value,
+                        travelMode: google.maps.TravelMode.DRIVING,
+                    })
+                    .then((result) => {
+                        // Route the directions and pass the response to a function to create
+                        // markers for each step.
+                        document.getElementById("warnings-panel").innerHTML =
+                            "<b>" + result.routes[0].warnings + "</b>";
+                        directionsRenderer.setDirections(result);
+                    })
+                    .catch((e) => {
+                        window.alert("Directions request failed due to " + e);
+                    });
+            }
+        }, err => {
+            console.error(err)
+        })
     }
 </script>
