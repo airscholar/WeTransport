@@ -1,0 +1,230 @@
+<style>
+    html,
+    body {
+        font-family: "Roboto", "Helvetica", sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        overflow: hidden;
+    }
+
+    .map {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: -10;
+    }
+
+    /*
+ * Top bar
+ */
+
+    .top-bar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 64px;
+        background-color: #445a65;
+        z-index: 20;
+    }
+
+    .top-bar .tracker {
+        position: absolute;
+        top: 24px;
+        left: 36px;
+        font-size: 18px;
+        color: rgba(255, 255, 255, 0.97);
+    }
+</style>
+
+{{!-- <style>
+    #map {
+        height: 100%;
+    }
+</style>
+<div class="container-fluid">
+    <h3>
+        Shipment Information
+    </h3>
+    <div class="row justify-content-center col-md-12" style="height: 800px;">
+
+        <div class="card col-md-2">
+            <div class="card-body">
+                <div class="form-group col-md-12">
+                    <label class="input-label">
+                        <center>Customer Destination</center>
+                    </label><br />
+                    {{shipment.receiver_address}}
+                </div>
+                <div>
+                    <button type="button" class="btn btn-success" id="btStart" onclick="">Start</button>
+                    <button type="button" class="btn btn-danger" id="btStop" onclick="">Stop</button>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-10">
+            <div id="map" style="height: 100%;"></div>
+        </div>
+    </div>
+</div> --}}
+{{!-- </div> --}}
+<div class="top-bar"><span class="tracker">Live Tracking</span></div>
+<div id="map" class="map"></div>
+
+<script defer src="/__/firebase/7.13.2/firebase-app.js"></script>
+<script defer src="/__/firebase/7.13.2/firebase-database.js"></script>
+<script defer src="/__/firebase/init.js"></script>
+<!-- Change out the following API_KEY for your Maps API Key -->
+<script defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7tHIkJIxsXWMmTDPpbce2VwDSvtqFINU&callback=initMap"></script>
+
+<script>
+    var isDirectionApiUsed = true, destinationLocation;
+    var map, destinationMarker, deliveryPersonMarker, deliveryToDestPolyline;
+    var destLat, destLng, directionsService, directionsRenderer;
+
+    function generateMarker({ position, icon, title }) {
+        return new google.maps.Marker({
+            position, icon, title, map,
+            animation: google.maps.Animation.DROP,
+        });
+    }
+
+    function drawPolyline({ directionResult }) {
+        return new google.maps.Polyline({
+            path: google.maps.geometry.encoding.decodePath(directionResult.routes[0].overview_polyline),
+            geodesic: true, strokeColor: '#00bcd4', strokeOpacity: 1.0, strokeWeight: 2, map
+        });
+    }
+
+    // Map Initialize
+    function initMap() {
+        // You can pass the destination lat and lng in query params
+        // In this example I will hardcode the value
+        destLat = 18.590879;
+        destLng = 73.753157;
+        destinationLocation = new google.maps.LatLng(destLat, destLng);
+        map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 12,
+            center: destinationLocation
+        });
+
+        // Set Destination Marker
+        destinationMarker = generateMarker({ position: destinationLocation, icon: '/images/dashboard/placemarker_red.png', title: 'Destination' })
+
+        directionsService = new google.maps.DirectionsService();
+        directionsRenderer = new google.maps.DirectionsRenderer({
+            suppressMarkers: true, map,
+            polylineOptions: {
+                strokeColor: "#79a1ee",
+                strokeOpacity: 1.0,
+                strokeWeight: 5
+            }
+        });
+
+        // Initialize Firebase Database
+        const db = firebase.database();
+
+        // ref can be any of your node name
+        // In my example I will be using locations as node name
+        db.ref('locations').on('value', snapshot => {
+            let dataSnapshot = snapshot.val();
+            // Before calling onLocationChange function 
+            // you can have some logic fetching the particular node 
+            // in which latitude and longitude data is stored.
+            // In this example we will be passing the snapshot value directly
+            onLocationChange(dataSnapshot);
+        });
+    }
+
+    function onLocationChange(dataSnapshot) {
+        if (deliveryPersonMarker) {
+            previousLat = deliveryPersonMarker.position.lat();
+            previousLng = deliveryPersonMarker.position.lng();
+        }
+        nextLat = dataSnapshot.latitude
+        nextLng = dataSnapshot.longitude
+        // Direction API shoud be used once
+        if (isDirectionApiUsed) {
+            let start = new google.maps.LatLng(parseFloat(dataSnapshot.latitude), parseFloat(dataSnapshot.longitude));
+            // Calculate and display Route
+            calculateRoute({ start, end: destinationLocation })
+        }
+        if (deliveryPersonMarker) {
+            // Update Delivery Person Marker using animation
+            animateMarkerNavigation({ current: { lat: deliveryPersonMarker.position.lat(), lng: deliveryPersonMarker.position.lng() }, next: { lat: parseFloat(dataSnapshot.latitude), lng: parseFloat(dataSnapshot.longitude) } })
+        } else {
+            // Set Delivery Person Marker on First Change
+            deliveryPersonMarker = generateMarker({
+                position: { lat: parseFloat(dataSnapshot.latitude), lng: parseFloat(dataSnapshot.longitude) },
+                icon: '/images/dashboard/placemarker_blue.png', title: 'Delivery Person'
+            })
+        }
+    }
+
+    function calculateRoute({ start, end }) {
+        var request = {
+            origin: start,
+            destination: end,
+            travelMode: 'DRIVING'
+        };
+        directionsService.route(request, function (result, status) {
+            if (status == 'OK') {
+                // directionsRenderer.setDirections(result);
+                isDirectionApiUsed = false
+                deliveryToDestPolyline = drawPolyline({ directionResult: result })
+            }
+        });
+    }
+
+    // move marker from current to next position in 0.5 seconds
+    function animateMarkerNavigation({ current, next }) {
+        var deltalat = (next.lat - current.lat) / 100;
+        var deltalng = (next.lng - current.lng) / 100;
+
+        var delay = 10 * 0.5;
+        for (var i = 0; i < 100; i++) {
+            (function (ind) {
+                setTimeout(
+                    function () {
+                        var lat = deliveryPersonMarker.position.lat();
+                        var lng = deliveryPersonMarker.position.lng();
+                        lat += deltalat;
+                        lng += deltalng;
+                        latlng = new google.maps.LatLng(lat, lng);
+                        deliveryPersonMarker.setPosition(latlng);
+                    }, delay * ind
+                );
+            })(i)
+        }
+    }
+   // async function initMap() {
+    //    setInterval(async () => {
+     //       const response = await axios.post('https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyB7tHIkJIxsXWMmTDPpbce2VwDSvtqFINU', {});
+
+            //const { lat, lng } = response.data.location;
+            //// Show a map centered at latitude / longitude.
+            //await axios.put('/setLocation', { latitude: lat, longitude: lng });
+
+            //setLocationOnMap({ lat, lng });
+            ////});
+        //}, 5000);
+    //}
+    //function setLocationOnMap(myLatLng) {
+      //  const map = new google.maps.Map(document.getElementById("map"), {
+        //    zoom: 14,
+          //  center: myLatLng,
+        //});
+        //new google.maps.Marker({
+          //  position: myLatLng,
+            //map,
+            //title: "Driver Location",
+        //});
+    //}
+</script>

@@ -49,6 +49,7 @@
         const socket = io('/')
 
         const image = "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png";
+        
         socket.on('locationsUpdate', locations => {
             markers.forEach((marker, id) => {
                 marker.setMap(null)
